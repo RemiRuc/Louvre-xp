@@ -2,12 +2,16 @@
  * Class Interaction : Allow to create interaction for the game
  * 1st parameter (String) : type of interaction (slice/hover/shake/spin)
  * 2nd parameter (String) : id of the HTML Tag where we want to do the interaction
+ * 
  * ====== Slice ======
  * 3rd parameter and 4th parameters : respectivly x and y values of the vector to draw
  * -- To a slice verticaly from up to down : x = 0 and y = 1
  * -- To a slice verticaly from down to up : x = 0 and y = -1
  * -- To a slice horizontaly from right to left : x = 1 and y = 0
  * -- To a slice horizontaly from left to right : x = -1 and y = 0
+ * 
+ * ====== Shake ======
+ * 3rd parameter (int) : Value to reach (a good value is 100)
  */
 
 class Interaction{
