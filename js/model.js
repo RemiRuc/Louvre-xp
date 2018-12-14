@@ -49,8 +49,8 @@ class Player{
     constructor(x,y){
         this.position = glMatrix.vec2.fromValues(x,y);
 
-        this.idleAnimation = new Animation("idle",3,500,0.33);
-        this.walkAnimation = new Animation("marche",9,500,0.8);
+        this.idleAnimation = new Animation("idle",3,250,0.33);
+        this.walkAnimation = new Animation("marche",9,250,0.8);
 
         this.mouseX = 0;
         
@@ -60,12 +60,11 @@ class Player{
     }
 
     update(){
-        console.log(this.mouseX);
         if(Math.abs(this.mouseX) < 0.5){
             this.idleAnimation.play();
             this.walkAnimation.restart();
         }else{
-            core.camPosition += this.mouseX < 0 ? -500 * core.deltaTime : 500 * core.deltaTime;
+            core.camPosition += this.mouseX < 0 ? -300 * core.deltaTime : 300 * core.deltaTime;
             this.walkAnimation.play();
             this.idleAnimation.restart();
         }
@@ -98,9 +97,24 @@ class Plane{
             core.ctx.save();
             core.ctx.translate(this.deplacement, 0);
 
-            let c_width = window.innerWidth * this.width;
+            let c_width = window.innerWidth/1980 * this.img.naturalWidth;
             core.ctx.drawImage(this.img,0,0,c_width,window.innerHeight);
             core.ctx.restore();
+        }
+    }
+}
+
+class PositionEvent{
+    constructor(x,callback){
+        this.position = x;
+        this.callback = callback;
+        this.triggered = false;
+    }
+
+    update(){
+        if(core.camPosition > this.position && !this.triggered){
+            this.callback();
+            this.triggered = true;
         }
     }
 }
