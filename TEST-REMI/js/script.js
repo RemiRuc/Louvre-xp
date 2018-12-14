@@ -12,6 +12,7 @@
 
 class Interaction{
     constructor(type, id, val1, val2, val3, val4){
+        this.div = document.getElementById(id)
         this.type = type
         /*** 
          * SLICE 
@@ -33,19 +34,51 @@ class Interaction{
 
             // Angle between the direction of the slice and the direction drawed by the user
             this.angle = 0
-        }
-        this.div = document.getElementById(id)
 
-        this.div.addEventListener("mousedown",(event)=>{
-            this.clientMouse[0] = event.clientX
-            this.clientMouse[1] = event.clientY
-        })
-        this.div.addEventListener("mouseup",(event)=>{
-            this.clientMouse[2] = event.clientX
-            this.clientMouse[3] = event.clientY
-            this.sliceSuccess()
-        })
+            this.div.onmousedown = (event)=>{
+                this.clientMouse[0] = event.clientX
+                this.clientMouse[1] = event.clientY
+            }
+            this.div.onmouseup = (event)=>{
+                this.clientMouse[2] = event.clientX
+                this.clientMouse[3] = event.clientY
+                this.sliceSuccess()
+            }
+        }
+        /*** 
+         * SHAKE
+         ***/
+        if (type === "shake") {
+            /*
+             * 1: Actual value of the shake
+             * 2: Value that we want to reach
+             */
+            this.actualValue = 0 // 1
+            this.successValue = val1 // 2
+            this.mouseDown = false
+
+            /*
+             * Detect if the user press the click or not
+             */
+            this.div.onmousedown = ()=>{
+                this.mouseDown = true
+            }
+            this.div.onmouseup = ()=>{
+                this.mouseDown = false
+            }
+
+            this.div.onmousemove = ()=>{
+                if (this.mouseDown) {
+                    this.actualValue++
+                    console.log(this.actualValue)
+                    if (this.actualValue >= this.successValue) {
+                        this.shakeSuccess()
+                    }
+                }
+            }
+        }
     }
+
 
     sliceSuccess(){
         this.directionDrawed = glMatrix.vec2.fromValues(this.clientMouse[2] - this.clientMouse[0], this.clientMouse[3] - this.clientMouse[1])
@@ -54,10 +87,19 @@ class Interaction{
 
         if (this.angle <= 12) {
             console.log('success')
+            this.div.onmousedown = null
+            this.div.onmouseup = null
         } else {
             console.log('error')
         }
     }
+
+    shakeSuccess(){
+        console.log('success')
+        this.div.onmousedown = null
+        this.div.onmouseup = null
+        this.div.onmousemove = null
+    }
 }
 
-let slice1 = new Interaction('slice', 'slice', -1, 0)
+let slice1 = new Interaction('shake', 'slice', 100)
