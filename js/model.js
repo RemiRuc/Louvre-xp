@@ -53,6 +53,10 @@ class Player{
         this.walkAnimation = new Animation("marche",9,250,0.8);
 
         this.mouseX = 0;
+        this.stop = false;
+
+        this.moveInput = false;
+        this.lookLeft = false;
         
         document.addEventListener("mousemove", (e)=>{
             this.mouseX = (e.clientX - window.innerWidth/2)/ window.innerWidth * 2;
@@ -60,21 +64,28 @@ class Player{
     }
 
     update(){
-        if(Math.abs(this.mouseX) < 0.5){
-            this.idleAnimation.play();
-            this.walkAnimation.restart();
+        if(!this.stop){
+            if(Math.abs(this.mouseX) < 0.5){
+                this.idleAnimation.play();
+                this.walkAnimation.restart();
+                this.moveInput = true;
+            }else{
+                core.camPosition += this.mouseX < 0 ? -300 * core.deltaTime : 300 * core.deltaTime;
+                this.walkAnimation.play();
+                this.idleAnimation.restart();
+                this.moveInput = false;
+            }
+            this.lookLeft = this.mouseX < 0;
         }else{
-            core.camPosition += this.mouseX < 0 ? -300 * core.deltaTime : 300 * core.deltaTime;
-            this.walkAnimation.play();
-            this.idleAnimation.restart();
+            this.moveInput = false;
         }
     }
 
     draw(){
-        if(Math.abs(this.mouseX) < 0.5){
-            this.idleAnimation.drawCurrentFrame(this.position, this.mouseX < 0);
+        if(this.moveInput){
+            this.idleAnimation.drawCurrentFrame(this.position, this.lookLeft);
         }else{
-            this.walkAnimation.drawCurrentFrame(this.position, this.mouseX < 0);
+            this.walkAnimation.drawCurrentFrame(this.position, this.lookLeft);
         }
     }
 }

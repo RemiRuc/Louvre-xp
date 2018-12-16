@@ -56,14 +56,17 @@ core.init = function(){
 
     update();
     core.hideMenu();
-    let char = core.instantiate(new Player(window.innerWidth/2,window.innerHeight/2 + 300));
+    let player = core.instantiate(new Player(window.innerWidth/2,window.innerHeight/2 + 300));
 
     let plane1 = core.instantiate(new Plane("Ressources/scenes/scene_2/sol.png",1,3));
     let plane2 = core.instantiate(new Plane("Ressources/scenes/scene_2/montagnes.png",0.3,2));
     let plane3 = core.instantiate(new Plane("Ressources/scenes/scene_2/soleil.png",0.1,1));
 
-    let event = core.instantiate(new PositionEvent(2000,()=>{
-        console.log("launch");
+    let event = core.instantiate(new PositionEvent(500,()=>{
+        player.stop = true;
+        let slice = new Interaction('slice', 'interaction', -1,1,()=>{
+            player.stop = false;
+        });
     }));
 
 }
