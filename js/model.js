@@ -28,7 +28,7 @@ class Animation{
             core.ctx.translate(position[0], position[1]);
             if(flip)
                 core.ctx.scale(-1,1);
-            core.ctx.drawImage(frame,-this.size/2,-this.size/2,this.size,this.size);
+            core.ctx.drawImage(frame,respX(-this.size/2),respX(-this.size),respX(this.size),respX(this.size));
             core.ctx.restore();
         }
     }
@@ -46,12 +46,13 @@ class Animation{
 }
 
 class Player{
-    constructor(x,y){
-        this.position = glMatrix.vec2.fromValues(x,y);
+    constructor(x,type,size,speed){
+        this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
 
-        this.idleAnimation = new Animation("idle",3,250,0.33);
-        this.walkAnimation = new Animation("marche",9,250,0.8);
+        this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
+        this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
 
+        this.speed = speed;
         this.mouseX = 0;
         this.stop = false;
 
@@ -64,13 +65,16 @@ class Player{
     }
 
     update(){
-        if(!this.stop){
-            if(Math.abs(this.mouseX) < 0.5){
+        if(!this.stop){0
+           if(Math.abs(this.mouseX) < 0.5){
                 this.idleAnimation.play();
                 this.walkAnimation.restart();
                 this.moveInput = true;
             }else{
-                core.camPosition += this.mouseX < 0 ? -300 * core.deltaTime : 300 * core.deltaTime;
+                core.camPosition += respX(this.mouseX < 0 ? -this.speed * core.deltaTime : this.speed * core.deltaTime);
+                if(core.camPosition < 0){
+                    core.camPosition = 0;
+                }
                 this.walkAnimation.play();
                 this.idleAnimation.restart();
                 this.moveInput = false;
@@ -91,41 +95,86 @@ class Player{
 }
 
 class Plane{
-    constructor(src,depth,width){
+    constructor(src,depth){
         this.img = new Image();
         this.img.src = src;
         this.depth = depth;
-        this.deplacement = 0;
-        this.width = width;
+        this.deplacementX = 0;
     }
 
     update(){
-        this.deplacement = -core.camPosition * this.depth; 
+        this.deplacementX = -Math.round(core.camPosition * this.depth); 
     }
 
     draw(){
         if(this.img.complete){
-            core.ctx.save();
-            core.ctx.translate(this.deplacement, 0);
-
             let c_width = window.innerWidth/1980 * this.img.naturalWidth;
-            core.ctx.drawImage(this.img,0,0,c_width,window.innerHeight);
-            core.ctx.restore();
+            core.ctx.drawImage(this.img,this.deplacementX,0,c_width,window.innerHeight);
         }
     }
 }
 
 class PositionEvent{
     constructor(x,callback){
-        this.position = x;
+        this.position = respX(x);
         this.callback = callback;
         this.triggered = false;
     }
 
     update(){
-        if(core.camPosition > this.position && !this.triggered){
+        if(core.camPosition > this.position - respX(450) && !this.triggered){
             this.callback();
             this.triggered = true;
         }
+    }
+}
+
+class Mouse{
+    constructor(position, nest){
+        this.position = respX(position);
+
+        this.targetPostion = respX(position);
+        this.screenPosition = 0;
+        this.nest = nest;
+
+        this.idleAnimation = new Animation(`souris/idle`,3,100,0.33);
+        this.walkAnimation = new Animation(`souris/marche`,4,100,0.4);
+    }
+
+    update(){
+        if(Math.abs(this.position - (core.camPosition + window.innerWidth/2)) < respX(200)) {
+            this.targetPostion = this.position + respX(300 * Math.random() + 300);
+        }
+
+        if(this.position > this.nest.position){
+            core.destroy(this);
+        }else if(this.targetPostion > this.position){
+            this.position += respX(200) * core.deltaTime;
+            this.walkAnimation.play();
+        }else{
+            this.idleAnimation.play();
+        }
+    }
+
+    draw(){
+        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(780));
+        if(this.targetPostion <= this.position){
+            this.idleAnimation.drawCurrentFrame(pos,false);
+        }else{
+            this.walkAnimation.drawCurrentFrame(pos,false);
+        }
+    }
+}
+
+class MouseNest{
+    constructor(position){
+        this.position = respX(position);
+    }
+
+    draw(){
+        core.ctx.beginPath();
+        core.ctx.rect(this.position - core.camPosition,respY(780) - 50,50,50);
+        core.ctx.fillStyle = "green";
+        core.ctx.fill();
     }
 }

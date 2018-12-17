@@ -18,10 +18,8 @@ Menu.lvlFinished = function(lvl){
     document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
 }
 
-document.querySelectorAll("#lvl_btn").forEach(el => {
-    el.addEventListener("click",()=>{
-        console.log(this.target)
-    })
+document.querySelectorAll("#lvl_btn").forEach((el) => {
+    console.log(el)    
 })
 
 Menu.showMenu()
