@@ -106,4 +106,4 @@ class Interaction{
     }
 }
 
-let slice1 = new Interaction('shake', 'slice', 100)
+//let slice1 = new Interaction('shake', 'slice', 100)
