@@ -15,3 +15,15 @@ body{
 
     background-color: rgba(0, 0, 200, 0.6);
 }
+
+.text-apparition{
+    position: fixed;
+}
+
+.text-apparition span{
+    opacity: 0;
+}
+
+.text-apparition .bold{
+    font-weight: bold;
+}
