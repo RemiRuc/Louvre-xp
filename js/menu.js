@@ -18,8 +18,19 @@ Menu.lvlFinished = function(lvl){
     document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
 }
 
-document.querySelectorAll("#lvl_btn").forEach((el) => {
-    console.log(el)    
+document.querySelectorAll(".lvl_btn").forEach(el => {
+    el.addEventListener("click", (target)=>{
+        let level = parseInt(target.target.attributes[1].nodeValue)
+        Menu.hideMenu()
+        switch (level) {
+            case 1:
+                core.scene1()
+                break;
+        
+            default:
+                break;
+        }
+    })
 })
 
 Menu.showMenu()

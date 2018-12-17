@@ -5,14 +5,13 @@
 
 body{
     margin: 0;
-    background-color: fuchsia;
-    background-image: url('../Ressources/menu/bg.jpg');
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 #menu{
     display: flex;
+    background-image: url('../Ressources/menu/bg.jpg');
 }
 
 #menu_left, #menu_right{
