@@ -25,7 +25,7 @@ class Animation{
         let frame = this.getCurrentFrame();
         if(frame != null){
             core.ctx.save();
-            core.ctx.translate(respX(position[0]), respY(position[1]));
+            core.ctx.translate(position[0], position[1]);
             if(flip)
                 core.ctx.scale(-1,1);
             core.ctx.drawImage(frame,respX(-this.size/2),respX(-this.size),respX(this.size),respX(this.size));
@@ -47,7 +47,7 @@ class Animation{
 
 class Player{
     constructor(x,type,size,speed){
-        this.position = glMatrix.vec2.fromValues(x,780);
+        this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
 
         this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
         this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
@@ -134,27 +134,35 @@ class Mouse{
         this.position = respX(position);
 
         this.targetPostion = respX(position);
-
         this.screenPosition = 0;
         this.nest = nest;
+
+        this.idleAnimation = new Animation(`souris/idle`,3,100,0.33);
+        this.walkAnimation = new Animation(`souris/marche`,4,100,0.4);
     }
 
     update(){
         if(Math.abs(this.position - (core.camPosition + window.innerWidth/2)) < respX(200)) {
             this.targetPostion = this.position + respX(300 * Math.random() + 300);
         }
+
         if(this.position > this.nest.position){
             core.destroy(this);
         }else if(this.targetPostion > this.position){
             this.position += respX(200) * core.deltaTime;
+            this.walkAnimation.play();
+        }else{
+            this.idleAnimation.play();
         }
     }
 
     draw(){
-        core.ctx.beginPath();
-        core.ctx.rect(this.position - core.camPosition,respY(780) - 20,20,20);
-        core.ctx.fillStyle = "red";
-        core.ctx.fill();
+        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(780));
+        if(this.targetPostion <= this.position){
+            this.idleAnimation.drawCurrentFrame(pos,false);
+        }else{
+            this.walkAnimation.drawCurrentFrame(pos,false);
+        }
     }
 }
 

@@ -84,7 +84,7 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/maison/plan-3-objets.png",0.85,3));
     core.instantiate(new Plane("Ressources/scenes/maison/plan-2-mur.png",0.7,3));
 
-    core.instantiate(new PositionEvent(3000,()=>{
+    core.instantiate(new PositionEvent(2800,()=>{
         player.stop = true;
         new Slice(()=>{
             player.stop = false;
