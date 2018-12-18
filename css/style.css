@@ -2,7 +2,9 @@ body{
     margin: 0;
 }
 
-
+#myCanvas{
+    position: absolute;
+}
 
 #momie_menu{
     position: absolute;

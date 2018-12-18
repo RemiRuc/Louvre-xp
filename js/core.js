@@ -46,26 +46,15 @@ core.init = function(){
 
         core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
 
-        core.ctx.beginPath();
+        /*core.ctx.beginPath();
         core.ctx.rect(0,0,window.innerWidth,window.innerHeight);
         core.ctx.fillStyle = "red";
-        core.ctx.fill();
+        core.ctx.fill();*/
    
         for(let i = core.objects.length - 1; i>=0 ;i--){
             if(typeof core.objects[i].draw !== "undefined")
                 core.objects[i].draw();
         }
-
-
-        core.ctx.beginPath();
-        core.ctx.rect(0,0,window.innerWidth,respY(80));
-        core.ctx.fillStyle = "black";
-        core.ctx.fill();
-
-        core.ctx.beginPath();
-        core.ctx.rect(0,window.innerHeight,window.innerWidth,-respY(80));
-        core.ctx.fillStyle = "black";
-        core.ctx.fill();
 
         requestAnimationFrame(update);
     }
@@ -88,6 +77,7 @@ core.lvlFinished = function(lvl){
 
 
 core.scene1 = function(){
+    core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/maison/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));

@@ -132,6 +132,37 @@ class PositionEvent{
     }
 }
 
+class CinematicEffect{
+    constructor(){
+        this.frames = new Array();
+        this.frames.length = 9;
+        for(let i = 0; i < 9; i++){
+            let frame = new Image();
+            frame.onload = () => { this.frames[i] = frame };
+            frame.src = `Ressources/cinematic_effect/${i}.png`;
+        }
+        this.currentFrame = null;
+        this.timer = 0;
+    }
+
+    update(){
+        if(this.timer > 0.1){
+            this.timer = 0;
+            let oldframe = this.currentFrame;
+            while(oldframe == this.currentFrame){
+                this.currentFrame = this.frames[Math.floor(this.frames.length * Math.random())];
+            }
+        }else{
+            this.timer += core.deltaTime;
+        }
+    }
+
+    draw(){
+        if(this.currentFrame != null)
+            core.ctx.drawImage(this.currentFrame,0,0,window.innerWidth,window.innerHeight);
+    }
+}
+
 class Mouse{
     constructor(position, nest){
         this.position = respX(position);
