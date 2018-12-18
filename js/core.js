@@ -45,11 +45,27 @@ core.init = function(){
         }
 
         core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+
+        core.ctx.beginPath();
+        core.ctx.rect(0,0,window.innerWidth,window.innerHeight);
+        core.ctx.fillStyle = "red";
+        core.ctx.fill();
    
         for(let i = core.objects.length - 1; i>=0 ;i--){
             if(typeof core.objects[i].draw !== "undefined")
                 core.objects[i].draw();
         }
+
+
+        core.ctx.beginPath();
+        core.ctx.rect(0,0,window.innerWidth,respY(80));
+        core.ctx.fillStyle = "black";
+        core.ctx.fill();
+
+        core.ctx.beginPath();
+        core.ctx.rect(0,window.innerHeight,window.innerWidth,-respY(80));
+        core.ctx.fillStyle = "black";
+        core.ctx.fill();
 
         requestAnimationFrame(update);
     }
@@ -70,25 +86,39 @@ core.lvlFinished = function(lvl){
     document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
 }
 
+
 core.scene1 = function(){
-    core.instantiate(new Plane("Ressources/scenes/maison/plan-flou.png",1.5,3));
+    core.instantiate(new Plane("Ressources/scenes/maison/plan-flou.png",1.5,400));
 
-    let player = core.instantiate(new Player(400,"chat",100,100));
-    let nest = core.instantiate(new MouseNest(3000));
-    core.instantiate(new Mouse(1000,nest));
-    core.instantiate(new Mouse(1100,nest));
-    core.instantiate(new Mouse(1200,nest));
-    core.instantiate(new Mouse(950,nest));
+    core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
-    core.instantiate(new Plane("Ressources/scenes/maison/plan-4-sol.png",1,3));
-    core.instantiate(new Plane("Ressources/scenes/maison/plan-3-objets.png",0.85,3));
-    core.instantiate(new Plane("Ressources/scenes/maison/plan-2-mur.png",0.7,3));
+    let player = core.instantiate(new Player(400,"chat",100,150));
+    let nest = core.instantiate(new MouseNest(6500));
+    core.instantiate(new Mouse(5000,nest));
+    core.instantiate(new Mouse(5100,nest));
+    core.instantiate(new Mouse(5200,nest));
+    core.instantiate(new Mouse(4950,nest));
 
-    core.instantiate(new PositionEvent(2800,()=>{
+    let maitre = core.instantiate(new Maitre(3330));
+
+    core.instantiate(new Plane("Ressources/scenes/level1/Sol.png",1));
+    core.instantiate(new Plane("Ressources/scenes/level1/objets_maison.png",0.9));
+    core.instantiate(new Plane("Ressources/scenes/level1/mur.png",0.8));
+
+
+    core.instantiate(new PositionEvent(3200,()=>{
+        player.stop = true;
+        new Shake(()=>{
+            player.stop = false;
+            maitre.active = true;
+        },100);
+    }));
+
+    core.instantiate(new PositionEvent(6300,()=>{
         player.stop = true;
         new Slice(()=>{
             player.stop = false;
-        },-1,1);
+        },1,0);
     }));
 }
 

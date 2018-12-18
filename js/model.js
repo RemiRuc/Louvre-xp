@@ -18,6 +18,8 @@ class Animation{
             return null;
         }
         let index = Math.floor(this.time/this.duration * (this.frames.length));
+        if(index >= this.frames.length)
+            index = this.frames.length - 1;
         return this.frames[index];
     }
 
@@ -33,9 +35,9 @@ class Animation{
         }
     }
 
-    play(){
+    play(loop = true){
         this.time += core.deltaTime;
-        if(this.time > this.duration){
+        if(this.time > this.duration && loop){
             this.time = 0;
         }
     }
@@ -50,7 +52,7 @@ class Player{
         this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
 
         this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
-        this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
+        this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);3
 
         this.speed = speed;
         this.mouseX = 0;
@@ -65,7 +67,7 @@ class Player{
     }
 
     update(){
-        if(!this.stop){0
+        if(!this.stop){
            if(Math.abs(this.mouseX) < 0.5){
                 this.idleAnimation.play();
                 this.walkAnimation.restart();
@@ -95,10 +97,11 @@ class Player{
 }
 
 class Plane{
-    constructor(src,depth){
+    constructor(src,depth,position = 0){
         this.img = new Image();
         this.img.src = src;
         this.depth = depth;
+        this.position = respX(position);
         this.deplacementX = 0;
     }
 
@@ -109,7 +112,7 @@ class Plane{
     draw(){
         if(this.img.complete){
             let c_width = window.innerWidth/1980 * this.img.naturalWidth;
-            core.ctx.drawImage(this.img,this.deplacementX,0,c_width,window.innerHeight);
+            core.ctx.drawImage(this.img,this.deplacementX + this.position,0,c_width,window.innerHeight);
         }
     }
 }
@@ -176,5 +179,24 @@ class MouseNest{
         core.ctx.rect(this.position - core.camPosition,respY(780) - 50,50,50);
         core.ctx.fillStyle = "green";
         core.ctx.fill();
+    }
+}
+
+
+class Maitre{
+    constructor(position){
+        this.position = respX(position);
+        this.animation = new Animation(`maitre`,6,500,0.6);
+        this.active = false;
+    }
+
+    update(){
+        if(this.active)
+            this.animation.play(false);
+    }
+
+    draw(){
+        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(950));
+        this.animation.drawCurrentFrame(pos,false);
     }
 }
