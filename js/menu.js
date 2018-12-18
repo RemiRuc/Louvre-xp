@@ -3,6 +3,7 @@ let Menu = {}
 Menu.hideMenu = function(){
     document.getElementById("menu").style.display = "none";
     document.getElementById("myCanvas").style.display = "block"
+    document.getElementById("interaction").style.display = "block"
 }
 
 Menu.showMenu = () => {
