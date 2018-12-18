@@ -1,5 +1,21 @@
+@font-face {
+    font-family: "hie";
+    src: url("./MERO_HIE.TTF");
+   }
+
 body{
     margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#menu{
+    display: flex;
+    background-image: url('../Ressources/menu/bg.jpg');
+}
+
+#menu_left, #menu_right{
+    flex: 1 1;
 }
 
 #myCanvas{
@@ -7,25 +23,27 @@ body{
 }
 
 #momie_menu{
-    position: absolute;
-    left:50vw;
-    top: 50vh;
-    width: 1000px;
-    height: 1000px;
-    transform: translate(-50%,-50%);
+    height: 100vh;
+    width: auto;
+    position: relative;
+    flex: 1.5 0;
 }
 
-#momie_menu img{
+#momie_menu .corp{
+    height: 90%;
+    display: block;
+    margin: auto;
+    margin-top: 5vh;
+}
+
+#momie_menu .piece{
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100%;
-    height: 100%;
-}
-
-#momie_menu .piece{
+    height: 90%;
+    margin: auto;
     transform: scale(1.2);
     opacity: 0;
     transition: 1s;
@@ -37,30 +55,21 @@ body{
 }
 
 .lvl_btn{
-    background-color: red;
-    position: fixed;
+    background-color: #E8C798;
+    color: #051028;
+
+    border: solid 4px #051028;
+    padding: 15px;
+    
     font-size: 30px;
+    font-family: hie;
+
+    margin: auto;
+    margin-top: 20px;
 }
 
 .lvl_btn:hover{
     cursor: pointer;
-}
-
-.lvl_btn:nth-child(1){
-    left:30vw;
-    top:20vh;
-}
-.lvl_btn:nth-child(2){
-    right:30vw;
-    top:40vh;
-}
-.lvl_btn:nth-child(3){
-    left:30vw;
-    bottom:40vh;
-}
-.lvl_btn:nth-child(4){
-    right:30vw;
-    bottom:20vh;
 }
 
 .interaction-div{

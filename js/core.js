@@ -60,9 +60,12 @@ core.init = function(){
     }
 
     update();
+}
+
+/*window.addEventListener("load",core.init){
     core.hideMenu();
     core.scene1();
-}
+}*/
 
 window.addEventListener("load",core.init);
 
