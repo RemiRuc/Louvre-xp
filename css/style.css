@@ -112,3 +112,18 @@ body{
 /******************
  ** LANDING PAGE **
  ******************/
+
+ #landing-page{
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+ }
+
+ #landing-page #explorer{
+     position: relative;
+ }
+ #landing-page #explorer img{
+     position: absolute;
+ }
