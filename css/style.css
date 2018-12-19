@@ -12,6 +12,8 @@ body{
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
+
+    font-family: 'Permanent Marker', cursive;
 }
 
 #menu{
@@ -92,7 +94,6 @@ body{
     position: fixed;
     width: fit-content;
     font-size: 1.3vw;
-    font-family: 'Permanent Marker', cursive;
     color: black;
     text-shadow: white 0px 0px 10px;
     letter-spacing: 0.1em;
