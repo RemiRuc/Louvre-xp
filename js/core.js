@@ -94,7 +94,7 @@ core.scene1 = function(){
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
-    let player = core.instantiate(new Player(400,"chat",100,1000));
+    let player = core.instantiate(new Player(400,"chat",100,100));
     let nest = core.instantiate(new MouseNest(6500));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
@@ -112,7 +112,7 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/Montagnes3.png",0.03));
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
-  /*  core.instantiate(new PositionEvent(800,()=>{
+    core.instantiate(new PositionEvent(800,()=>{
         core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], 'text1', '30%','80%',800));
     }));
 
@@ -157,9 +157,9 @@ core.scene1 = function(){
 
     core.instantiate(new PositionEvent(7500,()=>{
         core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], 'text2', '20%','80%',7500));
-    }));*/
+    }));
 
-    core.instantiate(new PositionEvent(1000,()=>{
+    core.instantiate(new PositionEvent(8000,()=>{
         Menu.lvlFinished(1);
         setTimeout(core.reset,10);
     }));

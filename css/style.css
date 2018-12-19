@@ -26,7 +26,7 @@ body{
 
 #myCanvas{
     position: absolute;
-    pointer-events: none;w
+    pointer-events: none;
 }
 
 #momie_menu{
@@ -91,7 +91,7 @@ body{
 .text-apparition{
     position: fixed;
     width: fit-content;
-    font-size: 30px;
+    font-size: 1.3vw;
     font-family: 'Permanent Marker', cursive;
     color: black;
     text-shadow: white 0px 0px 10px;
@@ -104,6 +104,6 @@ body{
 
 .text-apparition .bold{
     font-weight: bold;
-    font-size: 35px;
+    font-size: 1.5vw;
     text-transform: uppercase;
 }
