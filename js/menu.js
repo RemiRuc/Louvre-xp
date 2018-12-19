@@ -15,25 +15,30 @@ Menu.showMenu = () => {
 
 
 Menu.lvlFinished = function(lvl){
-    Menu.showMenu();
-    setTimeout(()=>{
-        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
-        document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
-    },1000);
+    core.curtainShow(()=>{
+        core.reset();
+        Menu.showMenu();
+        setTimeout(()=>{
+            document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+            document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
+        },2800);
+    },"Morceau de l'amulette débloqué","Fin du chapitre");
+  
 }
-
+let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"]
 document.querySelectorAll(".lvl_btn").forEach(el => {
     el.addEventListener("click", (target)=>{
         let level = parseInt(target.target.attributes[1].nodeValue)
-        Menu.hideMenu()
-        switch (level) {
-            case 1:
-                core.scene1()
-                break;
-        
-            default:
-                break;
-        }
+        core.curtainShow(()=>{
+            Menu.hideMenu()
+            switch (level) {
+                case 1:
+                    core.scene1()
+                    break;       
+                default:
+                    break;
+            }
+        },"Chapitre "+ level,lvlnames[level-1]);
     })
 })
 
