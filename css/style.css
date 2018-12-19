@@ -10,32 +10,49 @@
 
 body{
     margin: 0;
-    min-height: 100vh;
+    
     overflow-x: hidden;
 
     font-family: 'Permanent Marker', cursive;
 }
 
 #menu{
+    opacity: 0;
+    z-index: 10;
+    position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+
+     overflow: hidden;
+
     display: flex;
+    transition: all 0.5s;
    /* background-image: url('../Ressources/menu/bg.jpg');*/
-   background-color: #131313;
+
 }
 
 #menu_left, #menu_right{
     flex: 1 1;
+    margin-top: 20vh;
+    height: 80vh;
+    padding: 0px 50px;
 }
 
 #myCanvas{
     position: absolute;
     pointer-events: none;
+
+    z-index: 10000;
 }
 
 #momie_menu{
-    height: 100vh;
+    margin-top: 13vh;
+    height: 87vh;
     width: auto;
     position: relative;
-    flex: 1.5 0;
+    flex: 0.5 0;
 }
 
 #momie_menu .corp{
@@ -64,25 +81,45 @@ body{
 }
 
 .lvl_btn{
-    background-color: #E8C798;
+    background-image: url("../Ressources/landing-page/case.png");
+    background-size: 100% 100%;
     color: #051028;
-
-    border: solid 4px #051028;
     padding: 15px;
+
+    width: 300px;
+    height: 90px;
     
-    font-size: 30px;
+    line-height: 42px;
     font-family: hie;
+    text-align: center;
 
     margin: auto;
-    margin-top: 20px;
+    margin-top: 20%;
+}
+
+.lvl_btn.unlock{
+    font-size: 23px;
+    font-family: 'Permanent Marker', cursive;
+}
+
+#menu_left p:first-child{
+    margin-top: 0px;
+}
+#menu_right p:nth-child(3){
+    margin-top: 20%;
 }
 
 .lvl_btn:hover{
+    cursor: not-allowed;
+}
+
+.lvl_btn.unlock:hover{
     cursor: pointer;
 }
 
 .interaction-div{
     position: absolute;
+    z-index: 100000;
     top:0;
     left:0;
     right: 0;
@@ -91,6 +128,8 @@ body{
 }
 
 .text-apparition{
+    z-index: 100000000;
+
     position: fixed;
     width: fit-content;
     font-size: 1.3vw;
@@ -113,7 +152,7 @@ body{
  ** LANDING PAGE **
  ******************/
 
- #landing-page{
+ #main{
      position: absolute;
      top: 0;
      left: 0;
@@ -121,9 +160,55 @@ body{
      bottom: 0;
  }
 
- #landing-page #explorer{
-     position: relative;
- }
- #landing-page #explorer img{
+#explorer{
+     height: 99px;
      position: absolute;
+     left: 0;
+     right: 0;
+     bottom: 105px;
  }
+#explorer img{
+     position: absolute;
+     margin: auto;
+     left: 0;
+    right: 0;
+}
+#unhover-button{
+    cursor: pointer;
+}
+
+#main .logo{
+    height: 120px;
+    display: block;
+    margin: auto;
+    margin-top: 100px;
+    transition: all 1s;
+}
+
+#main .logo.little{
+    height: 70px;
+    margin-top: 20px;
+}
+
+
+
+#main #sub-title{
+    text-align: center;
+}
+
+.halo{
+    position: absolute;
+    top: -20px;
+    bottom: -20px;
+    background-size: 100% 100%;
+    width: 786px;
+    z-index: -1;
+}
+.halo.left{
+    background-image: url("../Ressources/landing-page/halo1.png");
+    left: -768px;
+}
+.halo.right{
+    background-image: url("../Ressources/landing-page/halo2.png");
+    right: -768px;
+}

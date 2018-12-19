@@ -24,7 +24,7 @@ core.destroy = function(obj){
 core.reset = function(){
     core.camPosition = 0;
     core.gameObjects = new Array();
-    console.log("ddestroy",core.gameObjects);
+    KillText();
 }
 
 core.ctx = null;
@@ -42,11 +42,10 @@ core.update =  function(){
     core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
     if(core.gameObjects.length > 0){
 
-        for(let i = core.gameObjects.length - 1; i>=0 ;i--){
-            console.log(i);
-            if(typeof core.gameObjects[i].update !== "undefined")
-                core.gameObjects[i].update();
-        }
+        core.gameObjects.forEach((gameObject)=>{
+            if(typeof gameObject.update !== "undefined")
+                gameObject.update();
+        });
 
         for(let i = core.gameObjects.length - 1; i>=0 ;i--){
             if(typeof core.gameObjects[i].draw !== "undefined")
@@ -84,11 +83,47 @@ core.hideMenu = function(){
 }
 
 core.lvlFinished = function(lvl){
-    document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+    Menu.showMenu()
+    setTimeout(()=>{
+        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+        if (lvl<4) {
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
+        }
+    },500)
+    
+    switch (lvl) {
+        case 1:
+            document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene2()
+            })
+            break;
+        case 2:
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene3()
+            })
+            break;
+        case 3:
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene4()
+            })
+            break;
+    
+        default:
+            break;
+    }
 }
 
 
+core.menuloader = function(){
+    core.instantiate(new Loader(500,535,70));
+}
+
 core.scene1 = function(){
+    core.reset();
+
     core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
@@ -113,15 +148,15 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
     core.instantiate(new PositionEvent(800,()=>{
-        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], 'text1', '30%','80%',800));
+        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], '30%','80%',800));
     }));
 
     core.instantiate(new PositionEvent(1800,()=>{
-        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], 'text1', '10%','80%',1800));
+        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], '10%','80%',1800));
     }));
 
     core.instantiate(new PositionEvent(2300,()=>{
-        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], 'text2', '20%','80%',2300));
+        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], '20%','80%',2300));
     }));
 
     core.instantiate(new PositionEvent(3200,()=>{
@@ -133,15 +168,15 @@ core.scene1 = function(){
     }));
 
     core.instantiate(new PositionEvent(3500,()=>{
-        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateur"], 'text2', '20%','80%',3500));
+        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateur"], '20%','80%',3500));
     }));
 
     core.instantiate(new PositionEvent(4500,()=>{
-        core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations"], 'text2', '20%','80%',4500));
+        core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations"], '20%','80%',4500));
     }));
 
     core.instantiate(new PositionEvent(5500,()=>{
-        core.instantiate(new TextAnimation(["Il repoussait","*les rats","et autres nuisibles"], 'text2', '20%','80%',5500));
+        core.instantiate(new TextAnimation(["Il repoussait","*les rats","et autres nuisibles"], '20%','80%',5500));
     }));
 
     core.instantiate(new PositionEvent(6300,()=>{
@@ -156,12 +191,12 @@ core.scene1 = function(){
 
 
     core.instantiate(new PositionEvent(7500,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], 'text2', '20%','80%',7500));
+        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7500));
     }));
 
     core.instantiate(new PositionEvent(8000,()=>{
         Menu.lvlFinished(1);
-        setTimeout(core.reset,10);
+        core.reset();
     }));
 }
 

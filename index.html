@@ -6,22 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title>Louvre xp</title>
+    <title>MIOU - La fresque du passé</title>
 </head>
 <body>
     <canvas id="myCanvas"></canvas>
 
 
     <div id="main">
-        <img src="Ressources/landing-page/logo.svg">
+        <img class="logo" src="Ressources/landing-page/logo.svg">
         <!-- LANDING PAGE -->
-        <h2>La fresque du passé</h2>
-        <div id="menu_left">
-            <p class="lvl_btn" data-lvl="1">Le culte du chat</p>
-            <p class="lvl_btn" data-lvl="2">Bastet le dieu chat</p>
+        <h2 id="sub-title">La fresque du passé</h2>
+        <div id="explorer">
+            <img src="Ressources/landing-page/button-hover.png" alt="">
+            <img id="unhover-button" src="Ressources/landing-page/button-unhover.png" alt="">
         </div>
         <!-- MENU -->
         <div id="menu">
+            <div class="halo left"></div>
+            <div class="halo right"></div>
+            <div id="menu_left">
+                <p class="lvl_btn unlock" data-lvl="1">CHAPITRE 1 :<br>Le culte du chat</p>
+                <p class="lvl_btn" data-lvl="2">CHAPITRE 2 :<br>Bastet le dieu chat</p>
+            </div>
             <div id="momie_menu">
                 <img class="corp" src="Ressources/menu/momie0.png">
                 <img class="piece" src="Ressources/menu/momie1.png" data-lvl="1">
@@ -30,8 +36,8 @@
                 <img class="piece" src="Ressources/menu/momie4.png" data-lvl="4">
             </div>
             <div id="menu_right">
-                <p class="lvl_btn" data-lvl="3">La momification des chats</p>
-                <p class="lvl_btn" data-lvl="4">Le livre des morts</p>
+                <p class="lvl_btn" data-lvl="3">CHAPITRE 3 :<br>La momification des chats</p>
+                <p class="lvl_btn" data-lvl="4">CHAPITRE 4 :<br>Le livre des morts</p>
             </div>
         </div>
     </div>
@@ -41,8 +47,8 @@
     <script src="vendors/gl-matrix-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="js/core.js"></script>
-    <script src="js/menu.js"></script>
     <script src="js/model.js"></script>
+    <script src="js/menu.js"></script>
     <script src="js/interaction.js"></script>
     <script src="js/text-animation.js"></script>
 </body>  
