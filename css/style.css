@@ -29,6 +29,7 @@ body{
 #myCanvas{
     position: absolute;
     pointer-events: none;
+    z-index: 10000;
 }
 
 #momie_menu{

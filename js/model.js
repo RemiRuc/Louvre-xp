@@ -52,7 +52,7 @@ class Player{
         this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
 
         this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
-        this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);3
+        this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
 
         this.speed = speed;
         this.mouseX = 0;
@@ -235,5 +235,20 @@ class Maitre{
     draw(){
         let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(940));
         this.animation.drawCurrentFrame(pos,false);
+    }
+}
+
+class Loader{
+    constructor(x,y,size){
+        this.position = glMatrix.vec2.fromValues(respX(x),respY(y));
+        this.walkAnimation = new Animation(`chat/marche`,9,size,0.7);
+    }
+
+    update(){
+        this.walkAnimation.play();  
+    }
+
+    draw(){
+        this.walkAnimation.drawCurrentFrame(this.position, false);
     }
 }

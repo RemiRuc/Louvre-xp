@@ -42,11 +42,10 @@ core.update =  function(){
     core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
     if(core.gameObjects.length > 0){
 
-        for(let i = core.gameObjects.length - 1; i>=0 ;i--){
-            console.log(i);
-            if(typeof core.gameObjects[i].update !== "undefined")
-                core.gameObjects[i].update();
-        }
+        core.gameObjects.forEach((gameObject)=>{
+            if(typeof gameObject.update !== "undefined")
+                gameObject.update();
+        });
 
         for(let i = core.gameObjects.length - 1; i>=0 ;i--){
             if(typeof core.gameObjects[i].draw !== "undefined")
@@ -68,6 +67,7 @@ core.init = function(){
     core.time = Date.now();
 
     core.update();
+    core.menuloader();
 }
 
 
@@ -88,7 +88,13 @@ core.lvlFinished = function(lvl){
 }
 
 
+core.menuloader = function(){
+    core.instantiate(new Loader(500,535,70));
+}
+
 core.scene1 = function(){
+    core.reset();
+
     core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
@@ -159,9 +165,9 @@ core.scene1 = function(){
         core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7500));
     }));
 
-    core.instantiate(new PositionEvent(2000,()=>{
+    core.instantiate(new PositionEvent(1000,()=>{
         Menu.lvlFinished(1);
-        setTimeout(core.reset,10);
+        core.reset();
     }));
 }
 
