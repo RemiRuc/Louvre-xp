@@ -1,29 +1,61 @@
 const core = {};
 
 // Animated obj in the canvas (with Update & Draw methods)
-core.objects = new Array();
+core.gameObjects = new Array();
 
 
 //Add Obj to the core.update
 core.instantiate = function(obj){
-    this.objects.push(obj);
+    this.gameObjects.push(obj);
     return obj;
 }
 
 //Remove obj from core.update and delete it from the memory
 core.destroy = function(obj){
-    for(let i = 0; i < this.objects.length; i++){
-        if(this.objects[i] == obj){
-            this.objects.splice(i,1);
+    for(let i = 0; i < this.gameObjects.length; i++){
+        if(this.gameObjects[i] == obj){
+            this.gameObjects.splice(i,1);
         }
     }
     obj = null;
     delete obj;
 }
 
+core.reset = function(){
+    core.camPosition = 0;
+    core.gameObjects = new Array();
+    console.log("ddestroy",core.gameObjects);
+}
+
 core.ctx = null;
+core.time =0;
 core.deltaTime = 0;
 core.camPosition = 0;
+
+
+core.update =  function(){
+    core.deltaTime = (Date.now() - core.time)/1000;
+    core.time = Date.now();
+
+  //  console.log(core.gameObjects);
+
+    core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+    if(core.gameObjects.length > 0){
+
+        for(let i = core.gameObjects.length - 1; i>=0 ;i--){
+            console.log(i);
+            if(typeof core.gameObjects[i].update !== "undefined")
+                core.gameObjects[i].update();
+        }
+
+        for(let i = core.gameObjects.length - 1; i>=0 ;i--){
+            if(typeof core.gameObjects[i].draw !== "undefined")
+                core.gameObjects[i].draw();
+        }
+    }
+
+    requestAnimationFrame(core.update);
+}
 
 core.init = function(){
 
@@ -33,34 +65,11 @@ core.init = function(){
 
     core.ctx = canvas.getContext("2d");
 
-    let time = Date.now();
+    core.time = Date.now();
 
-    function update(){
-        core.deltaTime = (Date.now() - time)/1000;
-        time = Date.now();
-
-        for(let i = core.objects.length - 1; i>=0 ;i--){
-            if(typeof core.objects[i].update !== "undefined")
-                core.objects[i].update();
-        }
-
-        core.ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-
-        /*core.ctx.beginPath();
-        core.ctx.rect(0,0,window.innerWidth,window.innerHeight);
-        core.ctx.fillStyle = "red";
-        core.ctx.fill();*/
-   
-        for(let i = core.objects.length - 1; i>=0 ;i--){
-            if(typeof core.objects[i].draw !== "undefined")
-                core.objects[i].draw();
-        }
-
-        requestAnimationFrame(update);
-    }
-
-    update();
+    core.update();
 }
+
 
 /*window.addEventListener("load",core.init){
     core.hideMenu();
@@ -85,7 +94,7 @@ core.scene1 = function(){
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
-    let player = core.instantiate(new Player(400,"chat",100,150));
+    let player = core.instantiate(new Player(400,"chat",100,1000));
     let nest = core.instantiate(new MouseNest(6500));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
@@ -103,13 +112,36 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/Montagnes3.png",0.03));
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
+  /*  core.instantiate(new PositionEvent(800,()=>{
+        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], 'text1', '30%','80%',800));
+    }));
+
+    core.instantiate(new PositionEvent(1800,()=>{
+        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], 'text1', '10%','80%',1800));
+    }));
+
+    core.instantiate(new PositionEvent(2300,()=>{
+        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], 'text2', '20%','80%',2300));
+    }));
 
     core.instantiate(new PositionEvent(3200,()=>{
         player.stop = true;
         new Shake(()=>{
             player.stop = false;
             maitre.active = true;
-        },100);
+        },75);
+    }));
+
+    core.instantiate(new PositionEvent(3500,()=>{
+        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateur"], 'text2', '20%','80%',3500));
+    }));
+
+    core.instantiate(new PositionEvent(4500,()=>{
+        core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations"], 'text2', '20%','80%',4500));
+    }));
+
+    core.instantiate(new PositionEvent(5500,()=>{
+        core.instantiate(new TextAnimation(["Il repoussait","*les rats","et autres nuisibles"], 'text2', '20%','80%',5500));
     }));
 
     core.instantiate(new PositionEvent(6300,()=>{
@@ -122,8 +154,14 @@ core.scene1 = function(){
         },1,0);
     }));
 
+
+    core.instantiate(new PositionEvent(7500,()=>{
+        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], 'text2', '20%','80%',7500));
+    }));*/
+
     core.instantiate(new PositionEvent(1000,()=>{
-        core.instantiate(new TextAnimation(["C'était également un fidèle",'*Protecteur','Auprès des cultivateur'], 'yo', '20%','100%',1000));
+        Menu.lvlFinished(1);
+        setTimeout(core.reset,10);
     }));
 }
 

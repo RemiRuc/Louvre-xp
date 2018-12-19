@@ -1,7 +1,12 @@
 @font-face {
     font-family: "hie";
-    src: url("./MERO_HIE.TTF");
-   }
+    src: url("./font/MERO_HIE.TTF");
+}
+
+@font-face {
+    font-family: barrio;
+    src: url("./font/Barrio-Regular.ttf");
+}
 
 body{
     margin: 0;
@@ -21,6 +26,7 @@ body{
 
 #myCanvas{
     position: absolute;
+    pointer-events: none;w
 }
 
 #momie_menu{
@@ -85,7 +91,11 @@ body{
 .text-apparition{
     position: fixed;
     width: fit-content;
-    font-size: 40px;
+    font-size: 30px;
+    font-family: 'Permanent Marker', cursive;
+    color: black;
+    text-shadow: white 0px 0px 10px;
+    letter-spacing: 0.1em;
 }
 
 .text-apparition span{
@@ -94,4 +104,6 @@ body{
 
 .text-apparition .bold{
     font-weight: bold;
+    font-size: 35px;
+    text-transform: uppercase;
 }

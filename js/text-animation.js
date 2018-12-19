@@ -14,7 +14,7 @@ class TextAnimation{
         this.parent.style.left = left
         this.parent.classList.add('text-apparition')
 
-        this.origin = origin;
+        this.origin = respX(origin) - respX(450);
 
         /* Stock the differents lines as a DOM elements */
         this.lines = []
@@ -46,7 +46,6 @@ class TextAnimation{
          */
         for (let i = 0; i < this.lines.length; i++) {
             for (let j = 0; j < this.lines[i].children.length; j++) {
-                console.log(this.lines[i].children[j])
                 TweenMax.to(this.lines[i].children[j], 1, {opacity:1, delay: (i*0.5 + j*0.05) });
             }
         }
