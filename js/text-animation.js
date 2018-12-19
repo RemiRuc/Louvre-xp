@@ -6,10 +6,9 @@
  */
 
 class TextAnimation{
-    constructor(texts, id, top, left,origin){
+    constructor(texts, top, left,origin){
         /* Create parent DOM element */
         this.parent = document.createElement('div')
-        this.parent.id = id
         this.parent.style.top = top
         this.parent.style.left = left
         this.parent.classList.add('text-apparition')
@@ -54,5 +53,11 @@ class TextAnimation{
     update(){
         TweenMax.set(this.parent,{x:this.origin - core.camPosition,force3D:true});
     }
+}
+
+function KillText(){
+    document.querySelectorAll('.text-apparition').forEach((text)=>{
+        text.remove();
+    });
 }
 
