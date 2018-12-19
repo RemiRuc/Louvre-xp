@@ -12,6 +12,8 @@ body{
     margin: 0;
     min-height: 100vh;
     overflow-x: hidden;
+
+    font-family: 'Permanent Marker', cursive;
 }
 
 #menu{
@@ -91,8 +93,7 @@ body{
 .text-apparition{
     position: fixed;
     width: fit-content;
-    font-size: 30px;
-    font-family: 'Permanent Marker', cursive;
+    font-size: 1.3vw;
     color: black;
     text-shadow: white 0px 0px 10px;
     letter-spacing: 0.1em;
@@ -104,7 +105,7 @@ body{
 
 .text-apparition .bold{
     font-weight: bold;
-    font-size: 35px;
+    font-size: 1.5vw;
     text-transform: uppercase;
 }
 
