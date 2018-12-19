@@ -11,7 +11,8 @@ body{
 
 #menu{
     display: flex;
-    background-image: url('../Ressources/menu/bg.jpg');
+   /* background-image: url('../Ressources/menu/bg.jpg');*/
+   background-color: #131313;
 }
 
 #menu_left, #menu_right{
@@ -79,4 +80,18 @@ body{
     right: 0;
     bottom: 0;
    /*background-color: rgba(0, 0, 200, 0.6);*/
+}
+
+.text-apparition{
+    position: fixed;
+    width: fit-content;
+    font-size: 40px;
+}
+
+.text-apparition span{
+    opacity: 0;
+}
+
+.text-apparition .bold{
+    font-weight: bold;
 }

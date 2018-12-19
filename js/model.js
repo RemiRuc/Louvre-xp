@@ -66,6 +66,12 @@ class Player{
         });
     }
 
+    jumpToPosition(x,speed){
+        TweenMax.to(core,speed,{camPosition:x,ease: Back.easeIn.config(1.7)});
+    }
+
+
+
     update(){
         if(!this.stop){
            if(Math.abs(this.mouseX) < 0.5){
@@ -227,7 +233,7 @@ class Maitre{
     }
 
     draw(){
-        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(950));
+        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(940));
         this.animation.drawCurrentFrame(pos,false);
     }
 }

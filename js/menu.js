@@ -15,8 +15,11 @@ Menu.showMenu = () => {
 
 
 Menu.lvlFinished = function(lvl){
-    document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
-    document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
+    Menu.showMenu();
+    setTimeout(()=>{
+        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+        document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
+    },1000);
 }
 
 document.querySelectorAll(".lvl_btn").forEach(el => {

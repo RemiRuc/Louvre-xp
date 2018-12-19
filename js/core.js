@@ -81,7 +81,7 @@ core.lvlFinished = function(lvl){
 
 core.scene1 = function(){
     core.instantiate(new CinematicEffect());
-    core.instantiate(new Plane("Ressources/scenes/maison/plan-flou.png",1.5,400));
+    core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
@@ -98,6 +98,11 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/objets_maison.png",0.9));
     core.instantiate(new Plane("Ressources/scenes/level1/mur.png",0.8));
 
+    core.instantiate(new Plane("Ressources/scenes/level1/Montagnes1.png",0.15));
+    core.instantiate(new Plane("Ressources/scenes/level1/Montagnes2.png",0.08));
+    core.instantiate(new Plane("Ressources/scenes/level1/Montagnes3.png",0.03));
+    core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
+
 
     core.instantiate(new PositionEvent(3200,()=>{
         player.stop = true;
@@ -110,8 +115,15 @@ core.scene1 = function(){
     core.instantiate(new PositionEvent(6300,()=>{
         player.stop = true;
         new Slice(()=>{
-            player.stop = false;
+            player.jumpToPosition(respX(6100),0.5);
+            setTimeout(() => {
+                player.stop = false;
+            }, 1000); 
         },1,0);
+    }));
+
+    core.instantiate(new PositionEvent(1000,()=>{
+        core.instantiate(new TextAnimation(["C'était également un fidèle",'*Protecteur','Auprès des cultivateur'], 'yo', '20%','100%',1000));
     }));
 }
 
