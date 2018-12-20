@@ -117,20 +117,39 @@ core.lvlFinished = function(lvl){
 }
 
 
+core.curtainShow = function(callback,title,subtitle){
+
+    document.querySelector("#curtain h2").textContent = title;
+    document.querySelector("#curtain h3").textContent = subtitle;
+    TweenMax.to("#curtain",0.5,{opacity:1});
+
+    TweenMax.to("#curtain h2",0.5,{opacity:1,delay:1});
+    TweenMax.to("#curtain h3",0.5,{opacity:1,delay:1.3});
+
+    TweenMax.to("#curtain h2",0.5,{opacity:0,delay:4.3});
+    TweenMax.to("#curtain h3",0.5,{opacity:0,delay:4});
+
+    TweenMax.to("#curtain",0.5,{opacity:0,delay:5});
+    setTimeout(callback,3000);
+}  
+
 core.menuloader = function(){
     core.instantiate(new Loader(500,535,70));
 }
+
+let test;
 
 core.scene1 = function(){
     core.reset();
 
     core.instantiate(new CinematicEffect());
+    test = core.instantiate(new Plane("Ressources/scenes/level1/flou_exterior.png",1.8,1000));
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
-    let player = core.instantiate(new Player(400,"chat",100,100));
     let nest = core.instantiate(new MouseNest(6500));
+    let player = core.instantiate(new Player(400,"chat",100,100,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
@@ -152,7 +171,7 @@ core.scene1 = function(){
     }));
 
     core.instantiate(new PositionEvent(1800,()=>{
-        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], '10%','80%',1800));
+        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], '15%','80%',1800));
     }));
 
     core.instantiate(new PositionEvent(2300,()=>{
@@ -181,23 +200,38 @@ core.scene1 = function(){
 
     core.instantiate(new PositionEvent(6300,()=>{
         player.stop = true;
+        player.playCustomAnim(new Animation(`chat/saut`,9,100,0.8));
         new Slice(()=>{
-            player.jumpToPosition(respX(6100),0.5);
+            player.jumpToPosition(respX(6100),0.4);
+            player.stop = false;
             setTimeout(() => {
-                player.stop = false;
-            }, 1000); 
+                nest.isbroken = true;
+            }, 500);
         },1,0);
     }));
 
 
-    core.instantiate(new PositionEvent(7500,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7500));
+    core.instantiate(new PositionEvent(7000,()=>{
+        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7000));
     }));
 
-    core.instantiate(new PositionEvent(8000,()=>{
+    core.instantiate(new PositionEvent(8100,()=>{
         Menu.lvlFinished(1);
-        core.reset();
     }));
+}
+
+core.scene2 = function(){
+    core.reset();
+
+    core.instantiate(new CinematicEffect());
+    core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
+    let player = core.instantiate(new Player(400,"chat",100,1000));
+
+    core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
+    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.9));
+    core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.8));
+    core.instantiate(new Plane("Ressources/scenes/level2/statue.png",0.7));
+    core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
 }
 
 function respX(val){

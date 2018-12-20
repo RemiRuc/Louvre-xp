@@ -37,9 +37,11 @@ class Animation{
 
     play(loop = true){
         this.time += core.deltaTime;
-        if(this.time > this.duration && loop){
-            this.time = 0;
+        if(this.time > this.duration){
+            this.time = loop ? 0 : this.time;
+            return true;
         }
+        return false;
     }
 
     restart(){
@@ -48,8 +50,9 @@ class Animation{
 }
 
 class Player{
-    constructor(x,type,size,speed){
+    constructor(x,type,size,speed,limit = 10000000){
         this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
+        this.limit = limit;
 
         this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
         this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
@@ -60,6 +63,8 @@ class Player{
 
         this.moveInput = false;
         this.lookLeft = false;
+
+        this.customAnim = null;
         
         document.addEventListener("mousemove", (e)=>{
             this.mouseX = (e.clientX - window.innerWidth/2)/ window.innerWidth * 2;
@@ -70,11 +75,17 @@ class Player{
         TweenMax.to(core,speed,{camPosition:x,ease: Back.easeIn.config(1.7)});
     }
 
-
+    playCustomAnim(anim){
+        this.customAnim = anim;
+    }
 
     update(){
         if(!this.stop){
-           if(Math.abs(this.mouseX) < 0.5){
+            if(this.customAnim){
+                if(this.customAnim.play()){
+                    this.customAnim = null;
+                }
+            }else if(Math.abs(this.mouseX) < 0.5){
                 this.idleAnimation.play();
                 this.walkAnimation.restart();
                 this.moveInput = true;
@@ -82,6 +93,8 @@ class Player{
                 core.camPosition += respX(this.mouseX < 0 ? -this.speed * core.deltaTime : this.speed * core.deltaTime);
                 if(core.camPosition < 0){
                     core.camPosition = 0;
+                }else if(core.camPosition > this.limit + window.innerWidth){
+                    core.camPosition =  this.limit + window.innerWidth;
                 }
                 this.walkAnimation.play();
                 this.idleAnimation.restart();
@@ -94,7 +107,9 @@ class Player{
     }
 
     draw(){
-        if(this.moveInput){
+        if(this.customAnim){
+            this.customAnim.drawCurrentFrame(this.position, this.lookLeft);
+        }else if(this.moveInput){
             this.idleAnimation.drawCurrentFrame(this.position, this.lookLeft);
         }else{
             this.walkAnimation.drawCurrentFrame(this.position, this.lookLeft);
@@ -209,13 +224,29 @@ class Mouse{
 class MouseNest{
     constructor(position){
         this.position = respX(position);
+        this.size = respX(75);
+        this.refuge_nrm = new Image();
+        this.refuge_exp = new Image();
+
+        this.isbroken = false;
+
+        this.refuge_nrm.src = "Ressources/scenes/level1/refuge/refuge1.png";
+        this.refuge_exp.src = "Ressources/scenes/level1/refuge/refuge2.png"
     }
 
     draw(){
-        core.ctx.beginPath();
-        core.ctx.rect(this.position - core.camPosition,respY(780) - 50,50,50);
-        core.ctx.fillStyle = "green";
-        core.ctx.fill();
+        console.log(this.isbroken);
+        if(this.refuge_nrm.complete && !this.isbroken){
+            core.ctx.save();
+            core.ctx.translate(this.position - core.camPosition,respY(780) + respX(8));
+            core.ctx.drawImage(this.refuge_nrm,respX(-this.size/2),respX(-this.size),respX(this.size),respX(this.size));
+            core.ctx.restore();
+        }else if(this.refuge_exp.complete){
+            core.ctx.save();
+            core.ctx.translate(this.position - core.camPosition,respY(780) + respX(8));
+            core.ctx.drawImage(this.refuge_exp,respX(-this.size/2),respX(-this.size),respX(this.size),respX(this.size));
+            core.ctx.restore();
+        }
     }
 }
 
@@ -233,7 +264,7 @@ class Maitre{
     }
 
     draw(){
-        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(940));
+        let pos = glMatrix.vec2.fromValues(this.position - core.camPosition,respY(780) + respX(83));
         this.animation.drawCurrentFrame(pos,false);
     }
 }
