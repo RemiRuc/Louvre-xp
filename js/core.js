@@ -67,7 +67,6 @@ core.init = function(){
     core.time = Date.now();
 
     core.update();
-    core.menuloader();
 }
 
 
@@ -84,7 +83,37 @@ core.hideMenu = function(){
 }
 
 core.lvlFinished = function(lvl){
-    document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+    Menu.showMenu()
+    setTimeout(()=>{
+        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+        if (lvl<4) {
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
+        }
+    },500)
+    
+    switch (lvl) {
+        case 1:
+            document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene2()
+            })
+            break;
+        case 2:
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene3()
+            })
+            break;
+        case 3:
+            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
+                Menu.hideMenu()
+                core.scene4()
+            })
+            break;
+    
+        default:
+            break;
+    }
 }
 
 
