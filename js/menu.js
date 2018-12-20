@@ -54,6 +54,7 @@ Menu.lvlFinished = function(lvl){
     core.curtainShow(()=>{
         core.reset();
         Menu.showMenu();
+        TweenMax.set("#logo_canvas",{display:"none"});
         setTimeout(()=>{
             document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
             if (lvl<4) {
@@ -88,11 +89,24 @@ document.querySelector(`.lvl_btn[data-lvl="1"]`).addEventListener("click", (targ
     Menu.loadlvl(1);
 });
 
+document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click",()=>{
+    Menu.loadlvl(2);
+})
+
+document.querySelector("#logo_canvas").addEventListener("click",()=>{
+    core.curtainShow(()=>{
+        core.reset();
+        Menu.showMenu();
+        TweenMax.set("#logo_canvas",{display:"none"});
+    },"Retour au menu");
+});
+
 
 let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"];
 Menu.loadlvl = function(level){
         core.curtainShow(()=>{
             Menu.hideMenu()
+            TweenMax.set("#logo_canvas",{display:"block"});
             switch (level) {
                 case 1:
                     core.scene1()
@@ -106,6 +120,5 @@ Menu.loadlvl = function(level){
         },"Chapitre "+ level,lvlnames[level-1]);
    
 }
-
 
 Menu.showLandingPage()

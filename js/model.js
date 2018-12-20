@@ -283,3 +283,54 @@ class Loader{
         this.walkAnimation.drawCurrentFrame(this.position, false);
     }
 }
+
+class InteractionAnimation{
+    constructor(folderName,nbFrames,duration){
+        this.frames = [];
+        this.frames.length = nbFrames;
+        for(let i = 0; i < nbFrames; i++){
+            let frame = new Image();
+            frame.onload = () => { this.frames[i] = frame };
+            frame.src = `Ressources/Anim/interaction/${folderName}/${i}.png`;
+        }
+        this.duration = duration;
+
+        this.time = 0;
+
+        this.display = false;
+    }
+
+    getCurrentFrame(){
+        if(this.frames.length === 0){
+            return null;
+        }
+        let index = Math.floor(this.time/this.duration * (this.frames.length));
+        if(index >= this.frames.length)
+            index = this.frames.length - 1;
+        return this.frames[index];
+    }
+
+    drawCurrentFrame(){
+        let frame = this.getCurrentFrame();
+        if(frame != null){
+            core.ctx.drawImage(frame,0,0,window.innerWidth,window.innerHeight);
+        }
+    }
+
+    update(){
+        this.time += core.deltaTime;
+        if(this.time > this.duration){
+            this.time = 0;
+        }
+    }
+
+    draw(){
+        if(this.display){
+            core.ctx.beginPath();
+            core.ctx.rect(0,0,window.innerWidth,window.innerHeight);
+            core.ctx.fillStyle = "rgba(0,0,0,0.9)";
+            core.ctx.fill();
+            this.drawCurrentFrame();
+        }
+    }
+}

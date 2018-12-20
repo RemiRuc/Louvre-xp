@@ -17,13 +17,11 @@
 class Interaction{
     constructor(callback){
         this.div = document.getElementById("interaction")
-        this.div.style.backgroundColor = "rgba(0,0,0,0.5)";
         this.callback = callback;
     }
 
     success(){
         this.callback();
-        this.div.style.backgroundColor = "transparent"
         this.div.onmousedown = null
         this.div.onmouseup = null
         this.div.onmousemove = null

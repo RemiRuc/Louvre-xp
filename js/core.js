@@ -143,15 +143,19 @@ core.scene1 = function(){
     core.reset();
 
     core.instantiate(new CinematicEffect());
+
+    let int1 = core.instantiate(new InteractionAnimation("maitre",31,2.5));
+    let int2 = core.instantiate(new InteractionAnimation("chat-saute",16,0.8));
+
     core.instantiate(new Plane("Ressources/scenes/level1/flou_exterior.png",1.8,6000));
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
-    test = core.instantiate(new Plane("Ressources/scenes/level1/plantation.png",0.8));
+
 
     let nest = core.instantiate(new MouseNest(6500));
-    let player = core.instantiate(new Player(400,"chat",100,500,17800));
+    let player = core.instantiate(new Player(400,"chat",100,100,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
@@ -164,13 +168,15 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/objets_maison.png",0.9));
     core.instantiate(new Plane("Ressources/scenes/level1/mur.png",0.8));
 
+    core.instantiate(new Plane("Ressources/scenes/level1/plantation.png",0.7,2500));
+
     core.instantiate(new Plane("Ressources/scenes/level1/Montagnes1.png",0.15));
     core.instantiate(new Plane("Ressources/scenes/level1/Montagnes2.png",0.08));
     core.instantiate(new Plane("Ressources/scenes/level1/Montagnes3.png",0.03));
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
     core.instantiate(new PositionEvent(800,()=>{
-        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], '30%','80%',800));
+        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], '29%','80%',800));
     }));
 
     core.instantiate(new PositionEvent(1800,()=>{
@@ -178,19 +184,21 @@ core.scene1 = function(){
     }));
 
     core.instantiate(new PositionEvent(2300,()=>{
-        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], '20%','80%',2300));
+        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], '25%','80%',2300));
     }));
 
     core.instantiate(new PositionEvent(3200,()=>{
         player.stop = true;
+        int1.display = true;
         new Shake(()=>{
             player.stop = false;
             maitre.active = true;
+            int1.display = false;
         },75);
     }));
 
     core.instantiate(new PositionEvent(3500,()=>{
-        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateur"], '20%','80%',3500));
+        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateurs"], '20%','80%',3500));
     }));
 
     core.instantiate(new PositionEvent(4500,()=>{
@@ -204,9 +212,11 @@ core.scene1 = function(){
     core.instantiate(new PositionEvent(6300,()=>{
         player.stop = true;
         player.playCustomAnim(new Animation(`chat/saut`,9,100,0.8));
+        int2.display = true;
         new Slice(()=>{
             player.jumpToPosition(respX(6100),0.4);
             player.stop = false;
+            int2.display = false;
             setTimeout(() => {
                 nest.isbroken = true;
             }, 500);
@@ -214,8 +224,8 @@ core.scene1 = function(){
     }));
 
 
-    core.instantiate(new PositionEvent(7000,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7000));
+    core.instantiate(new PositionEvent(7300,()=>{
+        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7300));
     }));
 
     core.instantiate(new PositionEvent(8100,()=>{
@@ -228,7 +238,7 @@ core.scene2 = function(){
 
     core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
-    let player = core.instantiate(new Player(400,"chat",100,1000));
+    let player = core.instantiate(new Player(400,"chat",100,100));
 
     core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
     core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.9));
