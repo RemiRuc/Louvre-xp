@@ -236,16 +236,62 @@ core.scene1 = function(){
 core.scene2 = function(){
     core.reset();
 
-    core.instantiate(new CinematicEffect());
+    let int = core.instantiate(new InteractionAnimation("maitre",31,2.5));
+
+    let cinema = core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
-    let player = core.instantiate(new Player(400,"chat",100,300));
+    let player = core.instantiate(new Player(400,"chat",100,100));
+    core.instantiate(new Plane("Ressources/scenes/level2/white.png",1,5800));
 
     core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
-    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.85));
+    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.85,500));
     core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.75));
     core.instantiate(new Plane("Ressources/scenes/level2/statue2.png",0.6,100));
     core.instantiate(new Plane("Ressources/scenes/level2/statue1.png",0.6,2300));
-    core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
+  //  core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
+
+    core.instantiate(new PositionEvent(1200,()=>{
+        core.instantiate(new TextAnimation(["Une fois par an", "dans la ville de Bubastis", "on fêtait le retour de l'inondation"], '20%','80%',1200));
+    }));
+
+    core.instantiate(new PositionEvent(2000,()=>{
+        core.instantiate(new TextAnimation(["Le chat est à l’honneur", " Il est incarné à travers","*la déesse Bastet"], '20%','80%',2000));
+    }));
+
+    core.instantiate(new PositionEvent(3200,()=>{
+        core.instantiate(new TextAnimation(["Bastet est la déesse", "du foyer, de la joie, de l’amour, de la maternité","mais aussi de la musique, de la danse et des festivités"], '20%','80%',3200));
+    }));
+
+    core.instantiate(new PositionEvent(5000,()=>{
+        core.instantiate(new TextAnimation(["Cependant", "*chaque nuit","elle montre une seconde nature ..."], '20%','80%',5000));
+    }));
+
+    core.instantiate(new PositionEvent(7500,()=>{
+        player.stop = true;
+        player.playCustomAnim(new Animation(`chat/saut`,9,100,0.8));
+        int.display = true;
+        new Shake(()=>{
+            player.stop = false;
+            int.display = false;
+            setTimeout(()=>{
+                core.scene2bis(cinema);
+            },800);
+        },75);
+    }));
+}
+
+core.scene2bis = function(cinema){
+    core.reset(); 
+    core.instantiate(cinema);
+    let player = core.instantiate(new Player(400,"bastet",200,100));
+
+    core.instantiate(new PositionEvent(500,()=>{
+        core.instantiate(new TextAnimation(["Sous son apparence de lionne", 'Bastet dite la dechireuse se prépare',"*à affronter Aposiphis..."], '20%','80%',500));
+    }));
+
+    core.instantiate(new PositionEvent(1500,()=>{
+        Menu.lvlFinished(2);
+    }));
 }
 
 function respX(val){
