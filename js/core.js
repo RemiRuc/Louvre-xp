@@ -108,16 +108,19 @@ core.menuloader = function(){
     core.instantiate(new Loader(500,535,70));
 }
 
+let test;
+
 core.scene1 = function(){
     core.reset();
 
     core.instantiate(new CinematicEffect());
+    test = core.instantiate(new Plane("Ressources/scenes/level1/flou_exterior.png",1.8,1000));
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
     let nest = core.instantiate(new MouseNest(6500));
-    let player = core.instantiate(new Player(400,"chat",100,100));
+    let player = core.instantiate(new Player(400,"chat",100,100,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
@@ -179,15 +182,28 @@ core.scene1 = function(){
     }));
 
 
-    core.instantiate(new PositionEvent(7500,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7500));
+    core.instantiate(new PositionEvent(7000,()=>{
+        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7000));
     }));
 
-    core.instantiate(new PositionEvent(8500,()=>{
+    core.instantiate(new PositionEvent(8100,()=>{
         Menu.lvlFinished(1);
     }));
 }
 
+core.scene2 = function(){
+    core.reset();
+
+    core.instantiate(new CinematicEffect());
+    core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
+    let player = core.instantiate(new Player(400,"chat",100,1000));
+
+    core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
+    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.9));
+    core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.8));
+    core.instantiate(new Plane("Ressources/scenes/level2/statue.png",0.7));
+    core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
+}
 
 function respX(val){
     return val * window.innerWidth/1000;

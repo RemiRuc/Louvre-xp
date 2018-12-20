@@ -34,6 +34,9 @@ document.querySelectorAll(".lvl_btn").forEach(el => {
             switch (level) {
                 case 1:
                     core.scene1()
+                    break;    
+                case 2:
+                    core.scene2()
                     break;       
                 default:
                     break;

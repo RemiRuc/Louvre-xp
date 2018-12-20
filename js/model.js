@@ -50,8 +50,9 @@ class Animation{
 }
 
 class Player{
-    constructor(x,type,size,speed){
+    constructor(x,type,size,speed,limit = 10000000){
         this.position = glMatrix.vec2.fromValues(respX(x),respY(780));
+        this.limit = limit;
 
         this.idleAnimation = new Animation(`${type}/idle`,3,size,0.33);
         this.walkAnimation = new Animation(`${type}/marche`,9,size,0.7);
@@ -92,6 +93,8 @@ class Player{
                 core.camPosition += respX(this.mouseX < 0 ? -this.speed * core.deltaTime : this.speed * core.deltaTime);
                 if(core.camPosition < 0){
                     core.camPosition = 0;
+                }else if(core.camPosition > this.limit + window.innerWidth){
+                    core.camPosition =  this.limit + window.innerWidth;
                 }
                 this.walkAnimation.play();
                 this.idleAnimation.restart();
