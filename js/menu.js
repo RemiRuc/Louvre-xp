@@ -56,6 +56,7 @@ Menu.lvlFinished = function(lvl){
         core.reset();
         Menu.showMenu();
         TweenMax.set("#logo_canvas",{display:"none"});
+        TweenMax.set("#chapter_canvas",{display:"none"});
         setTimeout(()=>{
             document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
             if (lvl<4) {
@@ -108,6 +109,8 @@ Menu.loadlvl = function(level){
         core.curtainShow(()=>{
             Menu.hideMenu()
             TweenMax.set("#logo_canvas",{display:"block"});
+            TweenMax.set("#chapter_canvas",{display:"block"});
+            document.getElementById("chapter_canvas").textContent = "Chapitre "+ level + " : " +lvlnames[level-1];
             switch (level) {
                 case 1:
                     core.scene1()

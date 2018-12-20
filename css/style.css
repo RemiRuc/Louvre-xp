@@ -75,6 +75,19 @@ body{
     cursor: pointer;
 }
 
+#chapter_canvas{
+    position: fixed;
+    z-index: 15000;
+    bottom: 1.2vh;
+    color: white;
+    left:0;
+    text-align: center;
+    width: 100vw;
+    display: none;
+    margin: 0;
+    font-size: 2.3vh;
+}
+
 #curtain h2{
     text-transform:uppercase;
     letter-spacing: 0.3em;

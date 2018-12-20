@@ -238,12 +238,13 @@ core.scene2 = function(){
 
     core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
-    let player = core.instantiate(new Player(400,"chat",100,100));
+    let player = core.instantiate(new Player(400,"chat",100,300));
 
     core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
-    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.9));
-    core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.8));
-    core.instantiate(new Plane("Ressources/scenes/level2/statue.png",0.7));
+    core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.85));
+    core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.75));
+    core.instantiate(new Plane("Ressources/scenes/level2/statue2.png",0.6,100));
+    core.instantiate(new Plane("Ressources/scenes/level2/statue1.png",0.6,2300));
     core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
 }
 
