@@ -122,7 +122,7 @@ class Plane{
         this.img = new Image();
         this.img.src = src;
         this.depth = depth;
-        this.position = respX(position);
+        this.position = position;
         this.deplacementX = 0;
     }
 
@@ -133,7 +133,7 @@ class Plane{
     draw(){
         if(this.img.complete){
             let c_width = window.innerWidth/1980 * this.img.naturalWidth;
-            core.ctx.drawImage(this.img,this.deplacementX + this.position,0,c_width,window.innerHeight);
+            core.ctx.drawImage(this.img,this.deplacementX + respX(this.position),0,c_width,window.innerHeight);
         }
     }
 }

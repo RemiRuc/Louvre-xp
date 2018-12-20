@@ -143,19 +143,22 @@ core.scene1 = function(){
     core.reset();
 
     core.instantiate(new CinematicEffect());
-    test = core.instantiate(new Plane("Ressources/scenes/level1/flou_exterior.png",1.8,1000));
+    core.instantiate(new Plane("Ressources/scenes/level1/flou_exterior.png",1.8,6000));
     core.instantiate(new Plane("Ressources/scenes/level1/plan-flou.png",1.5,400));
 
     core.instantiate(new Plane("Ressources/scenes/level1/Colonnes_sas.png",1));
 
+    test = core.instantiate(new Plane("Ressources/scenes/level1/plantation.png",0.8));
+
     let nest = core.instantiate(new MouseNest(6500));
-    let player = core.instantiate(new Player(400,"chat",100,100,17800));
+    let player = core.instantiate(new Player(400,"chat",100,500,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
     core.instantiate(new Mouse(4950,nest));
 
     let maitre = core.instantiate(new Maitre(3330));
+
 
     core.instantiate(new Plane("Ressources/scenes/level1/Sol.png",1));
     core.instantiate(new Plane("Ressources/scenes/level1/objets_maison.png",0.9));

@@ -20,6 +20,7 @@ Menu.showLandingPage = ()=>{
         TweenMax.to("#unhover-button", 0.3, {opacity: 0})
     })
 
+
     document.querySelector("#unhover-button").addEventListener("mouseout",()=>{
         TweenMax.to("#unhover-button", 0.3, {opacity: 1})
     })
@@ -49,32 +50,32 @@ Menu.hideLandingPage = ()=>{
     }})
 }
 
-//* POURQUOI C'EST LA CA ??!!!! EST CE QUE CA SERT OU PAS ????? */
 Menu.lvlFinished = function(lvl){
-    Menu.showMenu()
-    setTimeout(()=>{
-        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
-        if (lvl<4) {
-            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
-        }
-    },500)
+    core.curtainShow(()=>{
+        core.reset();
+        Menu.showMenu();
+        setTimeout(()=>{
+            document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+            if (lvl<4) {
+                document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
+            }
+        },2800);
+    },"Morceau de l'amulette débloqué","Fin du chapitre");
+
     switch (lvl) {
         case 1:
             document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene2()
+                Menu.loadlvl(2);
             })
             break;
         case 2:
             document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene3()
+                Menu.loadlvl(3);
             })
             break;
         case 3:
             document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene4()
+                Menu.loadlvl(4);
             })
             break;
     
@@ -84,22 +85,12 @@ Menu.lvlFinished = function(lvl){
 }
 
 document.querySelector(`.lvl_btn[data-lvl="1"]`).addEventListener("click", (target)=>{
-    Menu.hideMenu()
-    core.scene1()
-    core.curtainShow(()=>{
-        core.reset();
-        Menu.showMenu();
-        setTimeout(()=>{
-            document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
-            document.querySelector(`.lvl_btn[data-lvl="${lvl}"]`).classList.add("active");
-        },2800);
-    },"Morceau de l'amulette débloqué","Fin du chapitre");
-  
-}
-let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"]
-document.querySelectorAll(".lvl_btn").forEach(el => {
-    el.addEventListener("click", (target)=>{
-        let level = parseInt(target.target.attributes[1].nodeValue)
+    Menu.loadlvl(1);
+});
+
+
+let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"];
+Menu.loadlvl = function(level){
         core.curtainShow(()=>{
             Menu.hideMenu()
             switch (level) {
@@ -113,7 +104,8 @@ document.querySelectorAll(".lvl_btn").forEach(el => {
                     break;
             }
         },"Chapitre "+ level,lvlnames[level-1]);
-    })
-})
+   
+}
+
 
 Menu.showLandingPage()
