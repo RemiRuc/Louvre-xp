@@ -40,8 +40,9 @@ Menu.hideLandingPage = ()=>{
     TweenMax.to("#sub-title", 1, {opacity: 0, onComplete:()=>{
         document.getElementById("menu").style.display = "flex"
         TweenMax.to("#menu", 0.3, {opacity: 1})
-        TweenMax.to(".halo.left", 1, {left: (-250*window.innerWidth)/1180, ease: Expo.easeOut})
-        TweenMax.to(".halo.right", 1, {right: (-250*window.innerWidth)/1180, ease: Expo.easeOut})
+        let width = '0vw'
+        TweenMax.to(".halo.left", 1, {left: width, ease: Expo.easeOut})
+        TweenMax.to(".halo.right", 1, {right: width, ease: Expo.easeOut})
     }})
     document.querySelector(".logo").classList.add("little")
     TweenMax.to("#myCanvas", 1, {opacity: 0, onComplete:()=>{

@@ -245,7 +245,9 @@ body{
     top: -20px;
     bottom: -20px;
     background-size: 100% 100%;
-    width: 786px;
+    background-position: center;
+    width: 71vh;
+    max-width: 45vw;
     z-index: -1;
 }
 .halo.left{
