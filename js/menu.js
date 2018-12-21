@@ -35,7 +35,7 @@ Menu.showLandingPage = ()=>{
 }
 
 Menu.hideLandingPage = ()=>{
-    
+    Sounds.main.play();
     TweenMax.to("#explorer", 1, {opacity: 0})
     TweenMax.to("#sub-title", 1, {opacity: 0, onComplete:()=>{
         document.getElementById("menu").style.display = "flex"
@@ -46,8 +46,8 @@ Menu.hideLandingPage = ()=>{
     }})
     document.querySelector(".logo").classList.add("little")
     TweenMax.to("#myCanvas", 1, {opacity: 0, onComplete:()=>{
-        document.getElementById("myCanvas").style.opacity = "1"
         core.reset()
+        setTimeout(()=>{ document.getElementById("myCanvas").style.opacity = "1"},200);
     }})
 }
 
@@ -107,22 +107,22 @@ document.querySelector("#logo_canvas").addEventListener("click",()=>{
 
 let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"];
 Menu.loadlvl = function(level){
-        core.curtainShow(()=>{
-            Menu.hideMenu()
-            TweenMax.set("#logo_canvas",{display:"block"});
-            TweenMax.set("#chapter_canvas",{display:"block"});
-            document.getElementById("chapter_canvas").textContent = "Chapitre "+ level + " : " +lvlnames[level-1];
-            switch (level) {
-                case 1:
-                    core.scene1()
-                    break;    
-                case 2:
-                    core.scene2()
-                    break;       
-                default:
-                    break;
-            }
-        },"Chapitre "+ level,lvlnames[level-1]);
+    core.curtainShow(()=>{
+        Menu.hideMenu()
+        TweenMax.set("#logo_canvas",{display:"block"});
+        TweenMax.set("#chapter_canvas",{display:"block"});
+        document.getElementById("chapter_canvas").textContent = "Chapitre "+ level + " : " +lvlnames[level-1];
+        switch (level) {
+            case 1:
+                core.scene1()
+                break;    
+            case 2:
+                core.scene2()
+                break;       
+            default:
+                break;
+        }
+    },"Chapitre "+ level,lvlnames[level-1]);
    
 }
 

@@ -82,40 +82,6 @@ core.hideMenu = function(){
     document.getElementById("menu").style.display = "none";
 }
 
-core.lvlFinished = function(lvl){
-    Menu.showMenu()
-    setTimeout(()=>{
-        document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
-        if (lvl<4) {
-            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
-        }
-    },500)
-    
-    switch (lvl) {
-        case 1:
-            document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene2()
-            })
-            break;
-        case 2:
-            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene3()
-            })
-            break;
-        case 3:
-            document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).addEventListener("click",()=>{
-                Menu.hideMenu()
-                core.scene4()
-            })
-            break;
-    
-        default:
-            break;
-    }
-}
-
 
 core.curtainShow = function(callback,title,subtitle){
 
@@ -155,7 +121,7 @@ core.scene1 = function(){
 
 
     let nest = core.instantiate(new MouseNest(6500));
-    let player = core.instantiate(new Player(400,"chat",100,100,17800));
+    let player = core.instantiate(new Player(400,"chat",100,500,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
@@ -191,6 +157,7 @@ core.scene1 = function(){
         player.stop = true;
         int1.display = true;
         new Shake(()=>{
+            Sounds.porte.play();
             player.stop = false;
             maitre.active = true;
             int1.display = false;
@@ -205,9 +172,13 @@ core.scene1 = function(){
         core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations"], '20%','80%',4500));
     }));
 
+    core.instantiate(new PositionEvent(4800,()=>{
+        Sounds.souris.play();
+    }));
+
     core.instantiate(new PositionEvent(5500,()=>{
         core.instantiate(new TextAnimation(["Il repoussait","*les rats","et autres nuisibles"], '20%','80%',5500));
-    }));
+    }));  
 
     core.instantiate(new PositionEvent(6300,()=>{
         player.stop = true;
@@ -218,6 +189,7 @@ core.scene1 = function(){
             player.stop = false;
             int2.display = false;
             setTimeout(() => {
+                Sounds.souris_mort.play();
                 nest.isbroken = true;
             }, 500);
         },1,0);
@@ -225,7 +197,7 @@ core.scene1 = function(){
 
 
     core.instantiate(new PositionEvent(7300,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", " même dédiés notamment à", "*Bubastis"], '20%','80%',7300));
+        core.instantiate(new TextAnimation(["Des temples leur étaient", "même dédiés notamment à", "*Bubastis"], '20%','80%',7300));
     }));
 
     core.instantiate(new PositionEvent(8100,()=>{
@@ -236,19 +208,21 @@ core.scene1 = function(){
 core.scene2 = function(){
     core.reset();
 
-    let int = core.instantiate(new InteractionAnimation("maitre",31,2.5));
+    let int = core.instantiate(new InteractionAnimation("transformation",13,1.3));
 
     let cinema = core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
-    let player = core.instantiate(new Player(400,"chat",100,100));
-    core.instantiate(new Plane("Ressources/scenes/level2/white.png",1,5800));
+    let player = core.instantiate(new Player(400,"chat",100,500));
+    core.instantiate(new Plane("Ressources/scenes/level2/fond-blanc.png",1,5800));
 
     core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
     core.instantiate(new Plane("Ressources/scenes/level2/perso.png",0.85,500));
     core.instantiate(new Plane("Ressources/scenes/level2/mur.png",0.75));
     core.instantiate(new Plane("Ressources/scenes/level2/statue2.png",0.6,100));
     core.instantiate(new Plane("Ressources/scenes/level2/statue1.png",0.6,2300));
-  //  core.instantiate(new Plane("Ressources/scenes/level2/paysage.png",0.03));
+    core.instantiate(new Plane("Ressources/scenes/level1/Montagnes2.png",0.08));
+    core.instantiate(new Plane("Ressources/scenes/level1/Montagnes3.png",0.03));
+    core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
     core.instantiate(new PositionEvent(1200,()=>{
         core.instantiate(new TextAnimation(["Une fois par an", "dans la ville de Bubastis", "on fêtait le retour de l'inondation"], '20%','80%',1200));
@@ -268,22 +242,22 @@ core.scene2 = function(){
 
     core.instantiate(new PositionEvent(7500,()=>{
         player.stop = true;
-        player.playCustomAnim(new Animation(`chat/saut`,9,100,0.8));
+        player.playCustomAnim(new Animation(`chat/transformation`,11,150,1.1));
         int.display = true;
         new Shake(()=>{
             player.stop = false;
             int.display = false;
             setTimeout(()=>{
                 core.scene2bis(cinema);
-            },800);
+            },1000);
         },75);
     }));
 }
 
 core.scene2bis = function(cinema){
-    core.reset(); 
+    core.reset();
     core.instantiate(cinema);
-    let player = core.instantiate(new Player(400,"bastet",200,100));
+    let player = core.instantiate(new Player(400,"bastet",150,100));
 
     core.instantiate(new PositionEvent(500,()=>{
         core.instantiate(new TextAnimation(["Sous son apparence de lionne", 'Bastet dite la dechireuse se prépare',"*à affronter Aposiphis..."], '20%','80%',500));

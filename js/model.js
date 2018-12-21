@@ -108,7 +108,7 @@ class Player{
 
     draw(){
         if(this.customAnim){
-            this.customAnim.drawCurrentFrame(this.position, this.lookLeft);
+            this.customAnim.drawCurrentFrame(this.position, false);
         }else if(this.moveInput){
             this.idleAnimation.drawCurrentFrame(this.position, this.lookLeft);
         }else{
