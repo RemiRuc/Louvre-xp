@@ -16,7 +16,7 @@ Sounds.walk.volume = 0.3;
 Sounds.porte.volume = 0.3;
 Sounds.souris.volume = 0.3;
 Sounds.unlock.volume = 0.2;
-Sounds.finished.volume = 0.5;
+Sounds.finished.volume = 1;
 
 Sounds.walk.volume = 0.2;
 
