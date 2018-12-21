@@ -87,6 +87,10 @@ class Player{
                 }
             }else if(Math.abs(this.mouseX) < 0.5){
                 this.idleAnimation.play();
+                /** STOP AND RESTART WALK SOUND */
+                Sounds.walk.pause()
+                Sounds.walk.currentTime = 0
+                /** */
                 this.walkAnimation.restart();
                 this.moveInput = true;
             }else{
@@ -97,11 +101,18 @@ class Player{
                     core.camPosition =  this.limit + window.innerWidth;
                 }
                 this.walkAnimation.play();
+                /** START WALK SOUND */
+                Sounds.walk.play()
+                /** */
                 this.idleAnimation.restart();
                 this.moveInput = false;
             }
             this.lookLeft = this.mouseX < 0;
         }else{
+            /** STOP AND RESTART WALK SOUND */
+            Sounds.walk.pause()
+            Sounds.walk.currentTime = 0
+            /** */
             this.moveInput = false;
         }
     }

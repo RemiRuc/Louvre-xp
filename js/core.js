@@ -83,11 +83,17 @@ core.hideMenu = function(){
 }
 
 
-core.curtainShow = function(callback,title,subtitle){
-
+core.curtainShow = function(callback,title,subtitle, ending = false){
     document.querySelector("#curtain h2").textContent = title;
     document.querySelector("#curtain h3").textContent = subtitle;
     TweenMax.to("#curtain",0.5,{opacity:1});
+
+    if (ending) {
+        setTimeout(()=>{
+            Sounds.finished.play()
+        }, 1000)
+    }
+
 
     TweenMax.to("#curtain h2",0.5,{opacity:1,delay:1});
     TweenMax.to("#curtain h3",0.5,{opacity:1,delay:1.3});
@@ -121,7 +127,7 @@ core.scene1 = function(){
 
 
     let nest = core.instantiate(new MouseNest(6500));
-    let player = core.instantiate(new Player(400,"chat",100,500,17800));
+    let player = core.instantiate(new Player(400,"chat",100,100,17800));
     core.instantiate(new Mouse(5000,nest));
     core.instantiate(new Mouse(5100,nest));
     core.instantiate(new Mouse(5200,nest));
@@ -142,22 +148,22 @@ core.scene1 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
     core.instantiate(new PositionEvent(800,()=>{
-        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure"], '29%','80%',800));
+        core.instantiate(new TextAnimation(["Dans l’Egypte Antique,","*le chat", "occupait une place majeure."], '29%','80%',800));
     }));
 
     core.instantiate(new PositionEvent(1800,()=>{
-        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier"], '15%','80%',1800));
+        core.instantiate(new TextAnimation(["Il était protégé par","des lois interdisant","de l’insulter ou de le contrarier."], '15%','80%',1800));
     }));
 
     core.instantiate(new PositionEvent(2300,()=>{
-        core.instantiate(new TextAnimation(['Il était alors l’objet','de nombre d’attentions'], '25%','80%',2300));
+        core.instantiate(new TextAnimation(['Il était alors l’objet','de beaucoup d’attentions...'], '25%','80%',2300));
     }));
 
     core.instantiate(new PositionEvent(3200,()=>{
         player.stop = true;
         int1.display = true;
         new Shake(()=>{
-            Sounds.porte.play();
+            Sounds.door.play()
             player.stop = false;
             maitre.active = true;
             int1.display = false;
@@ -165,11 +171,11 @@ core.scene1 = function(){
     }));
 
     core.instantiate(new PositionEvent(3500,()=>{
-        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateurs"], '20%','80%',3500));
+        core.instantiate(new TextAnimation(["C'était également un fidèle","*Protecteur","Auprès des cultivateurs."], '20%','80%',3500));
     }));
 
     core.instantiate(new PositionEvent(4500,()=>{
-        core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations"], '20%','80%',4500));
+        core.instantiate(new TextAnimation(["*Gardien","des récoltes","et des plantations..."], '20%','80%',4500));
     }));
 
     core.instantiate(new PositionEvent(4800,()=>{
@@ -177,7 +183,7 @@ core.scene1 = function(){
     }));
 
     core.instantiate(new PositionEvent(5500,()=>{
-        core.instantiate(new TextAnimation(["Il repoussait","*les rats","et autres nuisibles"], '20%','80%',5500));
+        core.instantiate(new TextAnimation(["... il repoussait","*les rats","et autres nuisibles."], '20%','80%',5500));
     }));  
 
     core.instantiate(new PositionEvent(6300,()=>{
@@ -197,7 +203,7 @@ core.scene1 = function(){
 
 
     core.instantiate(new PositionEvent(7300,()=>{
-        core.instantiate(new TextAnimation(["Des temples leur étaient", "même dédiés notamment à", "*Bubastis"], '20%','80%',7300));
+        core.instantiate(new TextAnimation(["Des temples leurs étaient", "dédiés notamment à", "*Bubastis."], '20%','80%',7300));
     }));
 
     core.instantiate(new PositionEvent(8100,()=>{
@@ -212,7 +218,7 @@ core.scene2 = function(){
 
     let cinema = core.instantiate(new CinematicEffect());
     core.instantiate(new Plane("Ressources/scenes/level2/plan-flou.png",1.5,400));
-    let player = core.instantiate(new Player(400,"chat",100,500));
+    let player = core.instantiate(new Player(400,"chat",100,100));
     core.instantiate(new Plane("Ressources/scenes/level2/fond-blanc.png",1,5800));
 
     core.instantiate(new Plane("Ressources/scenes/level2/sol.png",1));
@@ -225,26 +231,27 @@ core.scene2 = function(){
     core.instantiate(new Plane("Ressources/scenes/level1/soleil.png",0.01));
 
     core.instantiate(new PositionEvent(1200,()=>{
-        core.instantiate(new TextAnimation(["Une fois par an", "dans la ville de Bubastis", "on fêtait le retour de l'inondation"], '20%','80%',1200));
+        core.instantiate(new TextAnimation(["Une fois par an", "dans la ville de Bubastis", "on fêtait le retour de l'inondation."], '20%','80%',1200));
     }));
 
     core.instantiate(new PositionEvent(2000,()=>{
-        core.instantiate(new TextAnimation(["Le chat est à l’honneur", " Il est incarné à travers","*la déesse Bastet"], '20%','80%',2000));
+        core.instantiate(new TextAnimation(["Le chat est alors à l’honneur.", " Il est incarné à travers","*la déesse Bastet."], '20%','80%',2000));
     }));
 
     core.instantiate(new PositionEvent(3200,()=>{
-        core.instantiate(new TextAnimation(["Bastet est la déesse", "du foyer, de la joie, de l’amour, de la maternité","mais aussi de la musique, de la danse et des festivités"], '20%','80%',3200));
+        core.instantiate(new TextAnimation(["Bastet est la déesse", "du foyer, de la joie, de l’amour, de la maternité","mais aussi de la musique, de la danse et des festivités."], '20%','80%',3200));
     }));
 
     core.instantiate(new PositionEvent(5000,()=>{
-        core.instantiate(new TextAnimation(["Cependant", "*chaque nuit","elle montre une seconde nature ..."], '20%','80%',5000));
+        core.instantiate(new TextAnimation(["Cependant", "*chaque nuit","elle dévoile sa seconde nature ..."], '20%','80%',5000));
     }));
 
-    core.instantiate(new PositionEvent(7500,()=>{
+    core.instantiate(new PositionEvent(7000,()=>{
         player.stop = true;
         player.playCustomAnim(new Animation(`chat/transformation`,11,150,1.1));
         int.display = true;
         new Shake(()=>{
+            Sounds.transformation.play();
             player.stop = false;
             int.display = false;
             setTimeout(()=>{
@@ -260,7 +267,7 @@ core.scene2bis = function(cinema){
     let player = core.instantiate(new Player(400,"bastet",150,100));
 
     core.instantiate(new PositionEvent(500,()=>{
-        core.instantiate(new TextAnimation(["Sous son apparence de lionne", 'Bastet dite la dechireuse se prépare',"*à affronter Aposiphis..."], '20%','80%',500));
+        core.instantiate(new TextAnimation(["Sous son apparence de lionne.", 'Bastet dite "la dechireuse" se prépare',"*à affronter Apophis..."], '20%','80%',500));
     }));
 
     core.instantiate(new PositionEvent(1500,()=>{
