@@ -115,7 +115,6 @@ body{
     height: 90%;
     display: block;
     margin: auto;
-    margin-top: 5vh;
 }
 
 #momie_menu .piece{
@@ -126,6 +125,7 @@ body{
     bottom: 0;
     height: 90%;
     margin: auto;
+    margin-top: 0px;
     transform: scale(1.2);
     opacity: 0;
     transition: 1s;
