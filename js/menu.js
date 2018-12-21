@@ -91,6 +91,10 @@ document.querySelector(`.lvl_btn[data-lvl="1"]`).addEventListener("click", (targ
     Menu.loadlvl(1);
 });
 
+document.querySelector(`.lvl_btn[data-lvl="2"]`).addEventListener("click", (target)=>{
+    Menu.loadlvl(2);
+});
+
 
 document.querySelector("#logo_canvas").addEventListener("click",()=>{
     core.curtainShow(()=>{
