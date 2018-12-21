@@ -83,9 +83,14 @@ core.hideMenu = function(){
 }
 
 core.lvlFinished = function(lvl){
+    /** STOP AND RESTART WALK SOUND */
+    Sounds.walk.pause()
+    Sounds.walk.currentTime = 0
+    /** */
     Menu.showMenu()
     setTimeout(()=>{
         document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+        Sounds.unlock.play()
         if (lvl<4) {
             document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
         }
@@ -117,11 +122,17 @@ core.lvlFinished = function(lvl){
 }
 
 
-core.curtainShow = function(callback,title,subtitle){
-
+core.curtainShow = function(callback,title,subtitle, ending = false){
     document.querySelector("#curtain h2").textContent = title;
     document.querySelector("#curtain h3").textContent = subtitle;
     TweenMax.to("#curtain",0.5,{opacity:1});
+
+    if (ending) {
+        setTimeout(()=>{
+            Sounds.finished.play()
+        }, 1000)
+    }
+
 
     TweenMax.to("#curtain h2",0.5,{opacity:1,delay:1});
     TweenMax.to("#curtain h3",0.5,{opacity:1,delay:1.3});
@@ -191,6 +202,7 @@ core.scene1 = function(){
         player.stop = true;
         int1.display = true;
         new Shake(()=>{
+            Sounds.door.play()
             player.stop = false;
             maitre.active = true;
             int1.display = false;

@@ -87,6 +87,10 @@ class Player{
                 }
             }else if(Math.abs(this.mouseX) < 0.5){
                 this.idleAnimation.play();
+                /** STOP AND RESTART WALK SOUND */
+                Sounds.walk.pause()
+                Sounds.walk.currentTime = 0
+                /** */
                 this.walkAnimation.restart();
                 this.moveInput = true;
             }else{
@@ -97,11 +101,18 @@ class Player{
                     core.camPosition =  this.limit + window.innerWidth;
                 }
                 this.walkAnimation.play();
+                /** START WALK SOUND */
+                Sounds.walk.play()
+                /** */
                 this.idleAnimation.restart();
                 this.moveInput = false;
             }
             this.lookLeft = this.mouseX < 0;
         }else{
+            /** STOP AND RESTART WALK SOUND */
+            Sounds.walk.pause()
+            Sounds.walk.currentTime = 0
+            /** */
             this.moveInput = false;
         }
     }
@@ -192,6 +203,9 @@ class Mouse{
         this.screenPosition = 0;
         this.nest = nest;
 
+        /** NOT IN THE SOUNDS.JS TO HAVE 4 DIFFERENTS FILES */
+        this.sound = new Audio("../Ressources/sound/mouse.mp3")
+
         this.idleAnimation = new Animation(`souris/idle`,3,100,0.33);
         this.walkAnimation = new Animation(`souris/marche`,4,100,0.4);
     }
@@ -205,8 +219,11 @@ class Mouse{
             core.destroy(this);
         }else if(this.targetPostion > this.position){
             this.position += respX(200) * core.deltaTime;
+            this.sound.play()
             this.walkAnimation.play();
         }else{
+            this.sound.pause()
+            this.sound.currentTime = 0
             this.idleAnimation.play();
         }
     }

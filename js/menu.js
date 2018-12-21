@@ -8,6 +8,10 @@ Menu.hideMenu = function(){
 }
 
 Menu.showMenu = () => {
+    /** STOP AND RESTART WALK SOUND */
+    Sounds.walk.pause()
+    Sounds.walk.currentTime = 0
+    /** */
     document.getElementById("menu").style.display = "flex";
     document.querySelector(".logo").style.display = "block"
     document.getElementById("interaction").style.display = "none"
@@ -26,6 +30,7 @@ Menu.showLandingPage = ()=>{
     })
 
     document.querySelector("#unhover-button").addEventListener("click",()=>{
+        Sounds.main.play()
         Menu.hideLandingPage()
     })
 
@@ -59,11 +64,12 @@ Menu.lvlFinished = function(lvl){
         TweenMax.set("#chapter_canvas",{display:"none"});
         setTimeout(()=>{
             document.querySelector(`img[data-lvl="${lvl}"]`).classList.add("active");
+            Sounds.unlock.play()
             if (lvl<4) {
                 document.querySelector(`.lvl_btn[data-lvl="${lvl+1}"]`).classList.add("unlock");
             }
         },2800);
-    },"Morceau de l'amulette débloqué","Fin du chapitre");
+    },"Morceau de l'amulette débloqué","Fin du chapitre",true);
 
     switch (lvl) {
         case 1:
@@ -93,6 +99,7 @@ document.querySelector(`.lvl_btn[data-lvl="1"]`).addEventListener("click", (targ
 
 
 document.querySelector("#logo_canvas").addEventListener("click",()=>{
+    Sounds.back.play()
     core.curtainShow(()=>{
         core.reset();
         Menu.showMenu();
@@ -103,6 +110,7 @@ document.querySelector("#logo_canvas").addEventListener("click",()=>{
 
 let lvlnames = ["Le culte des chats","Bastet, déesse des chats","Rites funéraires","Le voyage vers le royaume d'Osiris"];
 Menu.loadlvl = function(level){
+        Sounds.transition.play()
         core.curtainShow(()=>{
             Menu.hideMenu()
             TweenMax.set("#logo_canvas",{display:"block"});
